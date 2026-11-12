@@ -129,6 +129,9 @@ export interface AIConfig {
 export interface LifeSituation {
   id: string;
   title: string;
+  title_en?: string;
+  title_hi?: string;
+  title_te?: string;
   icon: string;
   description: string;
 }

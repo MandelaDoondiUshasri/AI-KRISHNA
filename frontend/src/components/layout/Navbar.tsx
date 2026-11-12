@@ -16,12 +16,12 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { id: 'home', label: 'Home', icon: Sparkles },
-    { id: 'chat', label: 'AI Krishna', icon: MessageSquare },
-    { id: 'explorer', label: 'Gita Explorer', icon: Compass },
-    { id: 'daily', label: t.dailyWisdom, icon: Sun },
-    { id: 'saved', label: t.savedWisdom, icon: Bookmark },
-    ...(user?.role === 'admin' ? [{ id: 'admin', label: t.admin, icon: Shield }] : [])
+    { id: 'home', label: t.homeNav, icon: Sparkles },
+    { id: 'chat', label: t.chatNav, icon: MessageSquare },
+    { id: 'explorer', label: t.explorerNav, icon: Compass },
+    { id: 'daily', label: t.dailyNav, icon: Sun },
+    { id: 'saved', label: t.savedNav, icon: Bookmark },
+    ...(user?.role === 'admin' ? [{ id: 'admin', label: t.adminNav, icon: Shield }] : [])
   ];
 
   return (
@@ -55,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
             </div>
           </div>
 
-          {/* Desktop Navigation Links (with whitespace-nowrap so text NEVER breaks) */}
+          {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -77,7 +77,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
             })}
           </nav>
 
-          {/* Mid-size Desktop Nav (Tablets/Smaller Desktops: compact icons + text) */}
+          {/* Mid-size Desktop Nav */}
           <nav className="hidden md:flex lg:hidden items-center space-x-1">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -109,7 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
                 <button
                   key={lang}
                   onClick={() => setLanguage(lang)}
-                  className={`px-1.5 py-0.5 rounded text-[11px] font-semibold whitespace-nowrap transition-colors ${
+                  className={`px-2 py-0.5 rounded text-[11px] font-semibold whitespace-nowrap transition-colors ${
                     language === lang
                       ? 'bg-[#F1B941] text-[#081225]'
                       : 'text-slate-300 hover:text-white'

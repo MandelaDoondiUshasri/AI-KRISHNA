@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BookOpen, Bookmark, Copy, Check, ArrowRight } from 'lucide-react';
 import { Verse } from '../../types';
 import { useLanguage } from '../../context/LanguageContext';
@@ -12,11 +12,15 @@ interface VerseCardProps {
 }
 
 export const VerseCard: React.FC<VerseCardProps> = ({ verse, onOpenDetail, onBookmarkSaved }) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const { user } = useAuth();
   const [activeLang, setActiveLang] = useState<'en' | 'hi' | 'te'>(language);
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    setActiveLang(language);
+  }, [language]);
 
   const translation = (
     activeLang === 'hi' && verse.translation_hi ? verse.translation_hi :
@@ -122,7 +126,7 @@ export const VerseCard: React.FC<VerseCardProps> = ({ verse, onOpenDetail, onBoo
           <div className="flex flex-wrap gap-1 mb-3">
             {situations.slice(0, 3).map((tag, i) => (
               <span key={i} className="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">
-                #{tag}
+                #{t.situationsMap[tag.toLowerCase()] || tag}
               </span>
             ))}
           </div>
@@ -134,7 +138,7 @@ export const VerseCard: React.FC<VerseCardProps> = ({ verse, onOpenDetail, onBoo
             onClick={() => onOpenDetail(verse)}
             className="w-full pt-2 border-t border-slate-800 flex items-center justify-between text-xs font-semibold text-[#F1B941] hover:underline"
           >
-            <span>Detailed Purport & Application</span>
+            <span>{t.readPurportBtn}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         )}

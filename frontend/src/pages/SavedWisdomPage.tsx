@@ -3,6 +3,7 @@ import { Bookmark, Trash2, BookOpen, Sparkles, LogIn } from 'lucide-react';
 import { Favorite, Verse } from '../types';
 import { userService } from '../services/userService';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { VerseModal } from '../components/gita/VerseModal';
 
 interface SavedWisdomPageProps {
@@ -11,6 +12,7 @@ interface SavedWisdomPageProps {
 
 export const SavedWisdomPage: React.FC<SavedWisdomPageProps> = ({ onOpenAuth }) => {
   const { user } = useAuth();
+  const { t, language } = useLanguage();
   const [favorites, setFavorites] = useState<Favorite[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalVerse, setModalVerse] = useState<Verse | null>(null);
@@ -51,17 +53,17 @@ export const SavedWisdomPage: React.FC<SavedWisdomPageProps> = ({ onOpenAuth }) 
             <Bookmark className="w-6 h-6" />
           </div>
           <h2 className="text-xl font-serif font-bold text-white mb-2">
-            Your Personal Spiritual Sanctuary
+            {t.sanctuaryTitle}
           </h2>
           <p className="text-xs text-slate-400 mb-6 leading-relaxed">
-            Please sign in to save your favorite Bhagavad Gita verses, personalized Krishna dialogues, and daily reflections.
+            {t.sanctuaryDesc}
           </p>
           <button
             onClick={onOpenAuth}
             className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#F1B941] to-[#D4AF37] text-[#081225] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-lg shadow-[#F1B941]/20 transition-all flex items-center justify-center space-x-2 mx-auto"
           >
             <LogIn className="w-4 h-4" />
-            <span>Sign In or Register</span>
+            <span>{t.signInOrRegister}</span>
           </button>
         </div>
       </div>
@@ -77,27 +79,27 @@ export const SavedWisdomPage: React.FC<SavedWisdomPageProps> = ({ onOpenAuth }) 
           <div>
             <div className="flex items-center space-x-2 text-xs text-[#F1B941] font-semibold uppercase tracking-wider mb-1">
               <Bookmark className="w-4 h-4 fill-[#F1B941]" />
-              <span>Personal Treasury</span>
+              <span>{t.savedBadge}</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white">
-              Saved Verses & Insights
+              {t.savedTitle}
             </h1>
           </div>
           <span className="text-xs text-slate-400">
-            {favorites.length} Saved {favorites.length === 1 ? 'Item' : 'Items'}
+            {favorites.length} {t.savedItems}
           </span>
         </div>
 
         {loading ? (
           <div className="text-center py-20">
-            <p className="text-xs text-slate-400">Loading your saved wisdom...</p>
+            <p className="text-xs text-slate-400">{t.loadingSaved}</p>
           </div>
         ) : favorites.length === 0 ? (
           <div className="text-center py-20 krishna-card rounded-2xl border border-slate-800">
             <Bookmark className="w-10 h-10 mx-auto text-slate-600 mb-3" />
-            <p className="text-sm text-slate-300 font-medium">No saved verses yet.</p>
+            <p className="text-sm text-slate-300 font-medium">{t.noSavedFound}</p>
             <p className="text-xs text-slate-400 mt-1">
-              As you chat with AI Krishna or explore the Gita, click the bookmark icon to collect wisdom here.
+              {t.collectWisdomHint}
             </p>
           </div>
         ) : (

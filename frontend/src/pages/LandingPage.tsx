@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { 
-  Sparkles, MessageSquare, Compass, ArrowRight, ShieldCheck, 
+  MessageSquare, Compass, ArrowRight, ShieldCheck, 
   Brain, Briefcase, Flame, HeartHandshake, ChevronDown, 
   ChevronUp, BookOpen, Check
 } from 'lucide-react';
@@ -12,6 +12,8 @@ interface LandingPageProps {
   onExploreGita: () => void;
 }
 
+const situationIcons = [Briefcase, Brain, Flame, HeartHandshake, ShieldCheck, Compass];
+
 export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExploreGita }) => {
   const { t, language, setLanguage } = useLanguage();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -19,74 +21,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
   };
-
-  const situations = [
-    {
-      title: "Career & Promotion Dilemmas",
-      icon: Briefcase,
-      desc: "Working hard but colleagues are getting promoted? Reclaim self-worth and discover Nishkama Karma."
-    },
-    {
-      title: "Overthinking & Future Anxiety",
-      icon: Brain,
-      desc: "Restless racing thoughts? Master the art of Abhyasa (practice) and Vairagya (healthy detachment)."
-    },
-    {
-      title: "Controlling Anger & Hurt Pride",
-      icon: Flame,
-      desc: "Someone insulted you? Learn how to halt the destructive chain reaction of rage before it ruins your peace."
-    },
-    {
-      title: "Relationships & Heartbreak",
-      icon: HeartHandshake,
-      desc: "Suffering from attachment or broken promises? Love with pure depth without losing your soul's anchor."
-    },
-    {
-      title: "Fear of Failure in Ventures",
-      icon: ShieldCheck,
-      desc: "Paralyzed by startup risk, exams, or setbacks? Develop 'Samatvam'—steady composure in success and defeat."
-    },
-    {
-      title: "Life Crossroads & Purpose",
-      icon: Compass,
-      desc: "Feeling empty or directionless? Align with your authentic Swadharma and walk forward with clarity."
-    }
-  ];
-
-  const engineSteps = [
-    { num: "01", title: "Problem Ingestion", desc: "Listens deeply to your real-life dilemma and unburdened emotions." },
-    { num: "02", title: "Emotion Detection", desc: "Identifies disappointment, envy, fear, grief, or cognitive overwhelm." },
-    { num: "03", title: "Latent Inquiry", desc: "Discovers the profound psychological inquiry beneath your surface words." },
-    { num: "04", title: "Semantic Gita Retrieval", desc: "Searches 700 verses across 18 chapters using multi-dimensional vector matching." },
-    { num: "05", title: "Verse Pinpointing", desc: "Retrieves the exact Chapter and Verse (e.g. 2.47 for duty, 6.5 for self-elevation)." },
-    { num: "06", title: "Sacred Context", desc: "Understands the original philosophical battlefield dialogue between Krishna and Arjuna." },
-    { num: "07", title: "Modern Life Bridge", desc: "Translates the ancient metaphor directly to your 21st-century situation." },
-    { num: "08", title: "Personalized Synthesis", desc: "Formulates a 6-part empathetic roadmap in English, Hindi, or Telugu." },
-    { num: "09", title: "Actionable Guidance", desc: "Provides concrete micro-actions and a golden thought to hold in your heart." }
-  ];
-
-  const faqs = [
-    {
-      q: "Does AI Krishna claim to be the actual Lord Krishna?",
-      a: "No. AI Krishna is an AI spiritual companion inspired by the teachings of the Bhagavad Gita. It clearly distinguishes itself as an AI system and never claims divinity. Its purpose is to make timeless spiritual philosophy accessible and applicable to modern challenges."
-    },
-    {
-      q: "How does the Context Bridge Engine work?",
-      a: "Unlike typical chatbots that output random verses, the Context Bridge Engine follows a rigorous 9-step semantic workflow: analyzing your emotional state, identifying the core question, retrieving authentic Gita scripture, bridging the ancient context to modern life, and generating a structured 6-part response."
-    },
-    {
-      q: "Are the Sanskrit verses and translations verified?",
-      a: "Yes. All verses in the knowledge base are rigorously structured from authentic Bhagavad Gita sources across all 18 chapters, complete with Devanagari Sanskrit, IAST transliteration, and translations in English, Telugu, and Hindi."
-    },
-    {
-      q: "Can I use AI Krishna in Telugu and Hindi?",
-      a: "Yes! AI Krishna natively supports English, Hindi (हिन्दी), and Telugu (తెలుగు). It generates natural, conversational, and culturally respectful responses rather than robotic machine translations."
-    },
-    {
-      q: "Is AI Krishna a replacement for professional mental health therapy or legal advice?",
-      a: "No. While the Gita offers profound mental solace, AI Krishna does not provide medical, psychological, legal, or financial advice. In cases of acute mental health distress or crisis, we provide 24/7 helpline resources like Tele-MANAS (14416) and 988."
-    }
-  ];
 
   return (
     <div className="min-h-screen text-slate-100 selection:bg-[#F1B941] selection:text-black">
@@ -108,24 +42,24 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
               <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#1E3E62]/80 border border-[#F1B941]/40 shadow-md shadow-[#F1B941]/10">
                 <span className="text-base">🦚</span>
                 <span className="text-xs font-semibold tracking-wider text-[#F1B941] uppercase whitespace-nowrap">
-                  Bhagavad Gita Spiritual Intelligence
+                  {t.heroBadge}
                 </span>
               </div>
 
               {/* Main Headline */}
               <div className="space-y-1">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-extrabold tracking-tight text-white leading-tight">
-                  AI KRISHNA
+                  {t.appName}
                 </h1>
                 <p className="gold-gradient-text text-2xl sm:text-3xl lg:text-4xl font-serif font-bold">
-                  Your Life Companion
+                  {t.tagline}
                 </p>
               </div>
 
               {/* Subtitle / Quote */}
               <blockquote className="border-l-2 border-[#F1B941] pl-4 py-1">
                 <p className="text-base sm:text-lg text-amber-100 font-serif italic leading-relaxed">
-                  "When life gets confusing, find clarity through timeless wisdom."
+                  "{t.heroQuote}"
                 </p>
               </blockquote>
 
@@ -137,7 +71,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                 <button
                   onClick={onStartChat}
-                  className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#F1B941] via-[#E5A93C] to-[#D4AF37] text-[#081225] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-xl shadow-[#F1B941]/25 hover:scale-[1.02] transition-all flex items-center justify-center space-x-2"
+                  className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#F1B941] via-[#E5A93C] to-[#D4AF37] text-[#081225] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-xl shadow-[#F1B941]/25 hover:scale-[1.02] transition-all flex items-center justify-center space-x-2 whitespace-nowrap"
                 >
                   <MessageSquare className="w-4 h-4 text-[#081225]" />
                   <span>{t.startChat}</span>
@@ -146,7 +80,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
 
                 <button
                   onClick={onExploreGita}
-                  className="px-6 py-3.5 rounded-2xl bg-[#0B192C] hover:bg-[#1E3E62] text-slate-200 hover:text-white border border-[#F1B941]/40 font-semibold text-xs tracking-wide transition-all shadow-md flex items-center justify-center space-x-2"
+                  className="px-6 py-3.5 rounded-2xl bg-[#0B192C] hover:bg-[#1E3E62] text-slate-200 hover:text-white border border-[#F1B941]/40 font-semibold text-xs tracking-wide transition-all shadow-md flex items-center justify-center space-x-2 whitespace-nowrap"
                 >
                   <BookOpen className="w-4 h-4 text-[#F1B941]" />
                   <span>{t.exploreGita}</span>
@@ -157,15 +91,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
               <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-slate-800 text-xs text-slate-400">
                 <div className="flex items-center space-x-1.5">
                   <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>All 18 Chapters</span>
+                  <span>{t.trustChapters}</span>
                 </div>
                 <div className="flex items-center space-x-1.5">
                   <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>700 Verses Structured</span>
+                  <span>{t.trustVerses}</span>
                 </div>
                 <div className="flex items-center space-x-1.5">
                   <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>English • हिन्दी • తెలుగు</span>
+                  <span>{t.trustLanguages}</span>
                 </div>
               </div>
 
@@ -196,10 +130,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-serif font-bold text-[#F1B941] flex items-center space-x-1.5">
                         <span>🦚</span>
-                        <span>Sri Krishna's Timeless Counsel</span>
+                        <span>{t.heroCardTitle}</span>
                       </span>
                       <span className="text-[10px] px-2 py-0.5 rounded bg-[#F1B941]/10 text-[#F1B941] border border-[#F1B941]/30">
-                        Mahabharata • Kurukshetra
+                        {t.heroCardSub}
                       </span>
                     </div>
 
@@ -208,7 +142,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
                     </p>
 
                     <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
-                      <span>Equanimity in all circumstances is Yoga.</span>
+                      <span>{t.heroCardMeaning}</span>
                       <span className="text-[#F1B941] font-mono">BG 2.48</span>
                     </div>
                   </div>
@@ -229,18 +163,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
           
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-bold uppercase tracking-widest text-[#F1B941] block mb-2">
-              Architectural Innovation
+              {t.howItWorksBadge}
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-4">
-              The 9-Step Context Bridge Engine
+              {t.howItWorksTitle}
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              We never return random, disconnected Gita quotes. Our proprietary intelligence engine deeply deconstructs your real-world predicament and builds a contextual bridge between ancient metaphysics and everyday life.
+              {t.howItWorksDesc}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {engineSteps.map((step) => (
+            {t.engineSteps.map((step) => (
               <div 
                 key={step.num}
                 className="krishna-card rounded-2xl p-6 border border-slate-800 hover:border-[#F1B941]/50 transition-all group"
@@ -272,19 +206,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
           
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-bold uppercase tracking-widest text-[#F1B941] block mb-2">
-              Universal Relevance
+              {t.everydayBadge}
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-4">
-              Timeless Wisdom for Modern Struggles
+              {t.everydayTitle}
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Lord Krishna's dialogue with Arjuna was not about abstract theology—it took place in the middle of a paralyzing moral, emotional, and psychological crisis.
+              {t.everydayDesc}
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {situations.map((sit, i) => {
-              const Icon = sit.icon;
+            {t.situations.map((sit, i) => {
+              const Icon = situationIcons[i] || Compass;
               return (
                 <div 
                   key={i}
@@ -301,7 +235,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
                     {sit.desc}
                   </p>
                   <span className="text-xs font-semibold text-[#F1B941] flex items-center space-x-1 group-hover:translate-x-1 transition-transform">
-                    <span>Seek Guidance</span>
+                    <span>{t.seekGuidance}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
@@ -320,31 +254,31 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
             
             <div>
               <span className="text-xs font-bold uppercase tracking-widest text-[#F1B941] block mb-2">
-                Authentic Scripture
+                {t.corpusBadge}
               </span>
               <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-6">
-                Complete Knowledge Base: 18 Chapters & 700 Verses
+                {t.corpusTitle}
               </h2>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
-                Explore every chapter and verse with authentic Devanagari Sanskrit, Romanized IAST transliteration, and rich philosophical purports.
+                {t.corpusDesc}
               </p>
               
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="p-4 rounded-xl bg-[#0B192C] border border-slate-800">
                   <span className="text-2xl font-serif font-bold text-[#F1B941] block">18</span>
-                  <span className="text-xs text-slate-400">Chapters Structured</span>
+                  <span className="text-xs text-slate-400">{t.statChapters}</span>
                 </div>
                 <div className="p-4 rounded-xl bg-[#0B192C] border border-slate-800">
                   <span className="text-2xl font-serif font-bold text-[#F1B941] block">700</span>
-                  <span className="text-xs text-slate-400">Eternal Verses</span>
+                  <span className="text-xs text-slate-400">{t.statVerses}</span>
                 </div>
                 <div className="p-4 rounded-xl bg-[#0B192C] border border-slate-800">
                   <span className="text-2xl font-serif font-bold text-[#F1B941] block">3</span>
-                  <span className="text-xs text-slate-400">Supported Languages</span>
+                  <span className="text-xs text-slate-400">{t.statLanguages}</span>
                 </div>
                 <div className="p-4 rounded-xl bg-[#0B192C] border border-slate-800">
                   <span className="text-2xl font-serif font-bold text-[#F1B941] block">100%</span>
-                  <span className="text-xs text-slate-400">Scriptural Integrity</span>
+                  <span className="text-xs text-slate-400">{t.statIntegrity}</span>
                 </div>
               </div>
 
@@ -352,7 +286,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
                 onClick={onExploreGita}
                 className="px-6 py-3 rounded-xl bg-[#1E3E62] hover:bg-[#28527A] text-[#F1B941] border border-[#F1B941]/40 font-semibold text-xs tracking-wider uppercase transition-all"
               >
-                Browse All Chapters & Verses →
+                {t.browseAllBtn}
               </button>
             </div>
 
@@ -370,7 +304,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
                 mā karma-phala-hetur bhūr mā te saṅgo 'stv akarmaṇi ||
               </p>
               <div className="pt-4 border-t border-slate-700/80 text-xs text-slate-200 leading-relaxed">
-                "You have a right only to perform your prescribed duty, but never to the fruits of action. Never consider yourself the cause of results, nor be attached to inaction."
+                {language === 'te' 
+                  ? '"కర్మలను ఆచరించడానికే నీకు అధికారము కలదు గాని, వాటి ఫలితాలపై ఎన్నడూ లేదు. కర్మఫలానికి నీవే కారణమనుకోకు, అలాగని కర్మలను చేయడం మానవద్దు."'
+                  : language === 'hi'
+                  ? '"तेरा कर्म करने में ही अधिकार है, उसके फलों में कभी नहीं। इसलिए तू कर्मों के फल का हेतु मत बन तथा तेरी अकर्मण्यता में भी आसक्ति न हो।"'
+                  : '"You have a right only to perform your prescribed duty, but never to the fruits of action. Never consider yourself the cause of results, nor be attached to inaction."'
+                }
               </div>
             </div>
 
@@ -384,13 +323,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
           <span className="text-xs font-bold uppercase tracking-widest text-[#F1B941] block mb-2">
-            Multilingual Soul
+            {t.multiBadge}
           </span>
           <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-4">
-            Guidance in Your Mother Tongue
+            {t.multiTitle}
           </h2>
           <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto mb-8">
-            Experience natural, empathetic spiritual guidance crafted in English, Hindi, and Telugu—without rigid or awkward machine translations.
+            {t.multiDesc}
           </p>
 
           {/* Interactive Lang Switcher */}
@@ -430,7 +369,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
           {/* Live Snippet Box */}
           <div className="krishna-card rounded-2xl p-6 text-left max-w-xl mx-auto border border-[#F1B941]/30">
             <span className="text-[11px] font-semibold text-[#F1B941] block mb-2">
-              Sample Krishna Greeting:
+              {t.sampleGreetingLabel}
             </span>
             <p className="text-xs sm:text-sm text-slate-100 font-serif leading-relaxed italic">
               "{t.welcomeMessage}"
@@ -446,15 +385,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
           
           <div className="text-center mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-[#F1B941] block mb-2">
-              Common Inquiries
+              {t.faqBadge}
             </span>
             <h2 className="text-3xl font-serif font-bold text-white mb-2">
-              {t.faq}
+              {t.faqTitle}
             </h2>
           </div>
 
           <div className="space-y-3">
-            {faqs.map((faq, idx) => {
+            {t.faqs.map((faq, idx) => {
               const isOpen = openFaq === idx;
               return (
                 <div 
@@ -484,7 +423,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
               onClick={onStartChat}
               className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-[#F1B941] to-[#D4AF37] text-[#081225] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-lg shadow-[#F1B941]/20 transition-all"
             >
-              Begin Your Dialogue with AI Krishna
+              {t.startChat}
             </button>
           </div>
 

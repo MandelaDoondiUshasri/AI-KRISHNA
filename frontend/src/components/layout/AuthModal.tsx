@@ -11,7 +11,7 @@ interface AuthModalProps {
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const { login, register } = useAuth();
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
@@ -74,12 +74,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
           <h3 className="text-xl font-bold font-serif gold-gradient-text">
-            {mode === 'login' ? 'Welcome Back to AI Krishna' : 'Begin Your Spiritual Journey'}
+            {mode === 'login' ? t.authLoginTitle : t.authRegisterTitle}
           </h3>
           <p className="text-xs text-slate-400 mt-1">
-            {mode === 'login'
-              ? 'Sign in to access your saved conversations, favorite verses, and reflections'
-              : 'Create an account for personalized life guidance and history tracking'}
+            {mode === 'login' ? t.authLoginSubtitle : t.authRegisterSubtitle}
           </p>
         </div>
 
@@ -94,7 +92,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 : 'text-slate-400 hover:text-white'
             }`}
           >
-            Sign In
+            {t.login}
           </button>
           <button
             type="button"
@@ -105,7 +103,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 : 'text-slate-400 hover:text-white'
             }`}
           >
-            Create Account
+            {t.register}
           </button>
         </div>
 
@@ -120,7 +118,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === 'register' && (
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Full Name</label>
+              <label className="block text-xs font-medium text-slate-300 mb-1">{t.authFullName}</label>
               <div className="relative">
                 <UserIcon className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
                 <input
@@ -136,7 +134,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           )}
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Email Address</label>
+            <label className="block text-xs font-medium text-slate-300 mb-1">{t.authEmail}</label>
             <div className="relative">
               <Mail className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
               <input
@@ -151,7 +149,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Password</label>
+            <label className="block text-xs font-medium text-slate-300 mb-1">{t.authPassword}</label>
             <div className="relative">
               <Lock className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
               <input
@@ -168,7 +166,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {mode === 'register' && (
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Preferred Language</label>
+              <label className="block text-xs font-medium text-slate-300 mb-1">{t.authPrefLang}</label>
               <div className="relative">
                 <Globe className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
                 <select
@@ -189,13 +187,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             disabled={loading}
             className="w-full py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-[#F1B941] to-[#D4AF37] text-[#081225] hover:brightness-110 transition-all shadow-md shadow-[#F1B941]/20 mt-2 disabled:opacity-50"
           >
-            {loading ? 'Processing...' : mode === 'login' ? 'Sign In' : 'Create Account'}
+            {loading ? '...' : mode === 'login' ? t.login : t.register}
           </button>
         </form>
 
         {/* Demo Fast Login Pills */}
         <div className="mt-6 pt-5 border-t border-slate-800">
-          <p className="text-[11px] text-center text-slate-400 mb-2">Quick Test Accounts:</p>
+          <p className="text-[11px] text-center text-slate-400 mb-2">{t.quickTestAccounts}</p>
           <div className="flex gap-2">
             <button
               type="button"

@@ -9,7 +9,7 @@ interface ChapterCardProps {
 }
 
 export const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, onSelect }) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   const summary = (
     language === 'hi' ? chapter.summary_hi :
@@ -27,10 +27,10 @@ export const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, onSelect }) =
       <div>
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-[#F1B941]/10 text-[#F1B941] border border-[#F1B941]/30">
-            Chapter {chapter.chapter_number}
+            {t.chapterWord} {chapter.chapter_number}
           </span>
           <span className="text-xs text-slate-400">
-            {chapter.verses_count} Verses
+            {chapter.verses_count} {t.versesWord}
           </span>
         </div>
 
@@ -63,7 +63,7 @@ export const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, onSelect }) =
         )}
 
         <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-semibold text-[#F1B941] group-hover:translate-x-0.5 transition-transform">
-          <span>Read Chapter Verses</span>
+          <span>{t.readChapterVerses}</span>
           <ArrowRight className="w-4 h-4" />
         </div>
       </div>

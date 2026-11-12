@@ -190,10 +190,10 @@ export const ChatPage: React.FC = () => {
               <span className="text-xl">🦚</span>
               <div>
                 <h2 className="text-xs font-serif font-bold text-slate-100">
-                  AI Krishna Spiritual Guidance
+                  {t.chatTitle}
                 </h2>
                 <span className="text-[10px] text-[#F1B941]">
-                  Context Bridge Engine Active
+                  {t.chatSubtitle}
                 </span>
               </div>
             </div>
@@ -243,7 +243,7 @@ export const ChatPage: React.FC = () => {
                 </div>
 
                 <h3 className="font-serif font-bold text-xl sm:text-2xl gold-gradient-text mb-3">
-                  Namaste & Welcome
+                  {t.welcomeTitle}
                 </h3>
 
                 <p className="font-serif text-sm sm:text-base text-slate-200 leading-relaxed italic max-w-lg mx-auto mb-6">
@@ -302,14 +302,14 @@ export const ChatPage: React.FC = () => {
                 disabled={isLoading || !inputText.trim()}
                 className="px-5 py-3 rounded-2xl bg-gradient-to-r from-[#F1B941] to-[#D4AF37] text-[#081225] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-lg shadow-[#F1B941]/20 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center space-x-1.5"
               >
-                <span>{t.send}</span>
+                <span>{t.sendBtn}</span>
                 <Send className="w-3.5 h-3.5" />
               </button>
             </form>
 
             <div className="flex items-center justify-between text-[11px] text-slate-400 mt-2 px-1">
-              <span>Press Enter to send • Context Bridge Engine synthesizes in 6 structured parts</span>
-              <span className="text-[#F1B941]">Confidential dialogue</span>
+              <span>{t.chatHelperText}</span>
+              <span className="text-[#F1B941]">{t.confidentialDialogue}</span>
             </div>
 
           </div>

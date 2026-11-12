@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Copy, Check, RotateCcw, Share2, Sparkles, User as UserIcon } from 'lucide-react';
 import { Message } from '../../types';
 import { ContextBridgeCard } from './ContextBridgeCard';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface ChatMessageProps {
   message: Message;
@@ -10,6 +11,7 @@ interface ChatMessageProps {
 }
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLastKrishna, onRegenerate }) => {
+  const { t } = useLanguage();
   const isKrishna = message.sender === 'krishna';
   const [copied, setCopied] = useState(false);
 
@@ -56,10 +58,10 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLastKrishna
           <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#F1B941]/20">
             <div className="flex items-center space-x-2">
               <span className="font-serif font-bold text-sm text-[#F1B941] tracking-wide">
-                Sri Krishna's Counsel
+                {t.krishnaCounselTitle}
               </span>
               <span className="text-[10px] px-2 py-0.5 rounded bg-[#F1B941]/10 text-[#F1B941] border border-[#F1B941]/30">
-                Gita Wisdom
+                {t.gitaWisdomBadge}
               </span>
             </div>
 

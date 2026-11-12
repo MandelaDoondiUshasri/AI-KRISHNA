@@ -1,6 +1,7 @@
 import React from 'react';
 import { Plus, MessageSquare, Trash2, X } from 'lucide-react';
 import { Conversation } from '../../types';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface HistorySidebarProps {
   conversations: Conversation[];
@@ -19,6 +20,8 @@ export const HistorySidebar: React.FC<HistorySidebarProps> = ({
   onDeleteConversation,
   onCloseMobile
 }) => {
+  const { t } = useLanguage();
+
   return (
     <div className="w-full sm:w-72 bg-[#060E1A] border-r border-[#F1B941]/20 flex flex-col h-full text-slate-200">
       
@@ -29,7 +32,7 @@ export const HistorySidebar: React.FC<HistorySidebarProps> = ({
           className="flex-1 flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#1E3E62] to-[#0A1A2F] hover:from-[#28527A] hover:to-[#132B45] text-[#F1B941] border border-[#F1B941]/40 text-xs font-semibold tracking-wide transition-all shadow-md shadow-[#F1B941]/10"
         >
           <Plus className="w-4 h-4" />
-          <span>New Spiritual Dialogue</span>
+          <span>{t.newChatBtn}</span>
         </button>
 
         {onCloseMobile && (
@@ -47,8 +50,8 @@ export const HistorySidebar: React.FC<HistorySidebarProps> = ({
         {conversations.length === 0 ? (
           <div className="text-center py-8 text-xs text-slate-400 px-4">
             <MessageSquare className="w-8 h-8 mx-auto mb-2 text-slate-600" />
-            <p>No previous dialogues found.</p>
-            <p className="mt-1 text-[11px] text-slate-400">Ask Krishna any dilemma to begin.</p>
+            <p>{t.noDialogues}</p>
+            <p className="mt-1 text-[11px] text-slate-400">{t.askToBegin}</p>
           </div>
         ) : (
           conversations.map((c) => {
@@ -65,7 +68,7 @@ export const HistorySidebar: React.FC<HistorySidebarProps> = ({
               >
                 <div className="flex items-center space-x-2.5 overflow-hidden pr-2">
                   <MessageSquare className={`w-3.5 h-3.5 flex-shrink-0 ${isSelected ? 'text-[#F1B941]' : 'text-slate-400'}`} />
-                  <span className="truncate">{c.title || 'Spiritual Dialogue'}</span>
+                  <span className="truncate">{c.title || t.newChatBtn}</span>
                 </div>
                 
                 <button
@@ -86,7 +89,7 @@ export const HistorySidebar: React.FC<HistorySidebarProps> = ({
 
       {/* Footer Info */}
       <div className="p-3 border-t border-slate-800 text-[11px] text-slate-400 text-center">
-        <span>Confidential & Private Spiritual Space</span>
+        <span>{t.confidentialSpace}</span>
       </div>
 
     </div>

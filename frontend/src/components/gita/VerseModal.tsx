@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Copy, Check, Bookmark, Sparkles, BookOpen } from 'lucide-react';
 import { Verse } from '../../types';
 import { useLanguage } from '../../context/LanguageContext';
@@ -12,11 +12,15 @@ interface VerseModalProps {
 }
 
 export const VerseModal: React.FC<VerseModalProps> = ({ verse, onClose, onBookmarkSaved }) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<'en' | 'hi' | 'te'>(language);
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    setActiveTab(language);
+  }, [language]);
 
   if (!verse) return null;
 
@@ -61,10 +65,10 @@ export const VerseModal: React.FC<VerseModalProps> = ({ verse, onClose, onBookma
         <div className="flex items-center justify-between pb-4 border-b border-[#F1B941]/20 pr-8">
           <div>
             <span className="text-xs font-bold px-2.5 py-1 rounded bg-[#F1B941]/10 text-[#F1B941] border border-[#F1B941]/30">
-              Bhagavad Gita Chapter {verse.chapter_number}, Verse {verse.verse_number}
+              {language === 'te' ? `భగవద్గీత అధ్యాయం ${verse.chapter_number}, శ్లోకం ${verse.verse_number}` : language === 'hi' ? `भगवद्गीता अध्याय ${verse.chapter_number}, श्लोक ${verse.verse_number}` : `Bhagavad Gita Chapter ${verse.chapter_number}, Verse ${verse.verse_number}`}
             </span>
             <h2 className="text-lg font-serif font-bold text-white mt-1">
-              {verse.chapter_title_en || `Chapter ${verse.chapter_number}`}
+              {verse.chapter_title_en || `${t.chapterWord} ${verse.chapter_number}`}
             </h2>
           </div>
 
@@ -102,7 +106,7 @@ export const VerseModal: React.FC<VerseModalProps> = ({ verse, onClose, onBookma
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-              Translation
+              {t.translationWord}
             </span>
             <div className="flex bg-[#0B192C] p-1 rounded-lg border border-slate-700 text-xs">
               <button
@@ -138,7 +142,7 @@ export const VerseModal: React.FC<VerseModalProps> = ({ verse, onClose, onBookma
           <div className="mb-6">
             <h4 className="text-xs font-semibold text-[#F1B941] uppercase tracking-wider mb-2 flex items-center space-x-1.5">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Philosophical Purport & Spiritual Essence</span>
+              <span>{t.philosophicalPurport}</span>
             </h4>
             <div className="p-4 rounded-xl bg-[#0B192C]/80 border border-slate-800 text-xs sm:text-sm text-slate-300 leading-relaxed">
               {verse.explanation}
@@ -150,7 +154,7 @@ export const VerseModal: React.FC<VerseModalProps> = ({ verse, onClose, onBookma
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-800">
           <div>
             <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">
-              Core Concepts
+              {t.coreConcepts}
             </span>
             <div className="flex flex-wrap gap-1">
               {verse.core_concepts?.split(',').map((c, i) => (
@@ -163,12 +167,12 @@ export const VerseModal: React.FC<VerseModalProps> = ({ verse, onClose, onBookma
 
           <div>
             <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">
-              Relevant Life Situations
+              {t.relevantSituations}
             </span>
             <div className="flex flex-wrap gap-1">
               {verse.life_situations?.split(',').map((s, i) => (
                 <span key={i} className="text-xs px-2.5 py-1 rounded-md bg-[#B8860B]/20 text-amber-200 border border-amber-400/30">
-                  #{s.trim()}
+                  #{t.situationsMap[s.trim().toLowerCase()] || s.trim()}
                 </span>
               ))}
             </div>

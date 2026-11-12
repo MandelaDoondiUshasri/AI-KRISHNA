@@ -3,6 +3,7 @@ import { BookOpen, Sparkles, CheckCircle2, Bookmark, Copy, Check, ShieldAlert, H
 import { StructuredResponse } from '../../types';
 import { userService } from '../../services/userService';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface ContextBridgeCardProps {
   data: StructuredResponse;
@@ -11,6 +12,7 @@ interface ContextBridgeCardProps {
 
 export const ContextBridgeCard: React.FC<ContextBridgeCardProps> = ({ data, onBookmarkSaved }) => {
   const { user } = useAuth();
+  const { t, language } = useLanguage();
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
@@ -57,7 +59,7 @@ export const ContextBridgeCard: React.FC<ContextBridgeCardProps> = ({ data, onBo
         <div className="flex items-center space-x-2">
           <span className="w-2 h-2 rounded-full bg-[#F1B941] animate-pulse"></span>
           <span className="text-[#F1B941] font-medium tracking-wide">
-            {data.is_direct_verse ? 'Direct Bhagavad Gita Scripture Match' : 'Philosophical Gita Connection'}
+            {data.is_direct_verse ? t.directMatch : t.philosophicalConnection}
           </span>
         </div>
         {data.emotion_detected && (
@@ -71,7 +73,7 @@ export const ContextBridgeCard: React.FC<ContextBridgeCardProps> = ({ data, onBo
       <div className="bg-[#0B192C]/80 border-l-4 border-amber-400 p-4 rounded-r-xl">
         <div className="flex items-center space-x-2 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-2">
           <HeartHandshake className="w-4 h-4" />
-          <span>1. Understanding Your Situation</span>
+          <span>{t.partUnderstanding}</span>
         </div>
         <p className="text-sm text-slate-200 leading-relaxed font-normal">
           {data.situation_understanding}
@@ -82,7 +84,7 @@ export const ContextBridgeCard: React.FC<ContextBridgeCardProps> = ({ data, onBo
       <div className="bg-[#0D2440]/60 border border-sky-500/20 p-4 rounded-xl">
         <div className="flex items-center space-x-2 text-sky-300 text-xs font-semibold uppercase tracking-wider mb-2">
           <Sparkles className="w-4 h-4 text-[#F1B941]" />
-          <span>2. Krishna's Wisdom</span>
+          <span>{t.partWisdom}</span>
         </div>
         <p className="text-sm text-slate-100 leading-relaxed">
           {data.krishna_wisdom}
@@ -97,14 +99,14 @@ export const ContextBridgeCard: React.FC<ContextBridgeCardProps> = ({ data, onBo
             <div className="flex items-center space-x-2">
               <BookOpen className="w-4 h-4 text-[#F1B941]" />
               <span className="text-xs font-bold font-serif text-[#F1B941] tracking-wider uppercase">
-                3. Relevant Bhagavad Gita Verse (Chapter {data.verse.chapter_number}, Verse {data.verse.verse_number})
+                {t.partVerse} ({t.chapterWord} {data.verse.chapter_number}, {language === 'te' ? 'శ్లోకం' : language === 'hi' ? 'श्लोक' : 'Verse'} {data.verse.verse_number})
               </span>
             </div>
             
             <div className="flex items-center space-x-1.5">
               <button
                 onClick={handleCopyVerse}
-                title="Copy Sanskrit Verse & Translation"
+                title={t.copyVerseBtn}
                 className="p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
@@ -112,7 +114,7 @@ export const ContextBridgeCard: React.FC<ContextBridgeCardProps> = ({ data, onBo
               {user && data.verse.id && (
                 <button
                   onClick={handleSaveVerse}
-                  title="Bookmark this verse"
+                  title={t.bookmarkVerseBtn}
                   className="p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-[#F1B941] transition-colors"
                 >
                   <Bookmark className={`w-3.5 h-3.5 ${saved ? 'text-[#F1B941] fill-[#F1B941]' : ''}`} />
@@ -136,7 +138,7 @@ export const ContextBridgeCard: React.FC<ContextBridgeCardProps> = ({ data, onBo
           {/* Translation */}
           <div className="pt-3 border-t border-slate-700/60">
             <span className="text-[11px] font-semibold text-[#F1B941] uppercase tracking-wider block mb-1">
-              Meaning:
+              {t.verseMeaningLabel}
             </span>
             <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
               {data.verse.translation}
@@ -149,7 +151,7 @@ export const ContextBridgeCard: React.FC<ContextBridgeCardProps> = ({ data, onBo
       <div className="bg-[#0B192C]/80 border border-slate-700/60 p-4 rounded-xl">
         <div className="flex items-center space-x-2 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">
           <Compass className="w-4 h-4" />
-          <span>4. How This Applies to Your Life</span>
+          <span>{t.partApplies}</span>
         </div>
         <p className="text-sm text-slate-200 leading-relaxed">
           {data.how_it_applies}
@@ -161,7 +163,7 @@ export const ContextBridgeCard: React.FC<ContextBridgeCardProps> = ({ data, onBo
         <div className="bg-[#081225]/80 border border-slate-700/70 p-4 rounded-xl">
           <div className="flex items-center space-x-2 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-3">
             <CheckCircle2 className="w-4 h-4" />
-            <span>5. Practical Steps You Can Take</span>
+            <span>{t.partSteps}</span>
           </div>
           <div className="space-y-2.5">
             {data.practical_steps.map((step, idx) => {
@@ -194,7 +196,7 @@ export const ContextBridgeCard: React.FC<ContextBridgeCardProps> = ({ data, onBo
       {/* 6. A Thought to Remember */}
       <div className="p-4 rounded-xl bg-gradient-to-r from-[#F1B941]/15 via-[#B8860B]/20 to-[#F1B941]/10 border border-[#F1B941]/40 text-center">
         <span className="text-[11px] font-bold tracking-widest uppercase text-[#F1B941] block mb-1">
-          6. A Thought to Remember
+          {t.partThought}
         </span>
         <p className="font-serif italic text-sm sm:text-base text-amber-100 font-medium">
           "{data.thought_to_remember}"

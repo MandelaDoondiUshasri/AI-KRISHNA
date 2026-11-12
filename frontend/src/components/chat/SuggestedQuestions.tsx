@@ -7,7 +7,7 @@ interface SuggestedQuestionsProps {
 }
 
 export const SuggestedQuestions: React.FC<SuggestedQuestionsProps> = ({ onSelect }) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   const questionsByLang: Record<string, string[]> = {
     en: [
@@ -45,7 +45,7 @@ export const SuggestedQuestions: React.FC<SuggestedQuestionsProps> = ({ onSelect
     <div className="py-2">
       <div className="flex items-center space-x-1.5 mb-2 text-xs font-semibold text-[#F1B941]">
         <Sparkles className="w-3.5 h-3.5" />
-        <span>Suggested Reflections</span>
+        <span>{t.suggestedQuestionsTitle}</span>
       </div>
       <div className="flex flex-wrap gap-2">
         {currentQuestions.map((q, idx) => (

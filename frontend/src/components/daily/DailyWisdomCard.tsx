@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sun, Sparkles, Copy, Check, Bookmark, Share2, Compass, BookOpen } from 'lucide-react';
 import { DailyWisdom } from '../../types';
 import { useLanguage } from '../../context/LanguageContext';
@@ -11,11 +11,15 @@ interface DailyWisdomCardProps {
 }
 
 export const DailyWisdomCard: React.FC<DailyWisdomCardProps> = ({ daily, onBookmarkSaved }) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const { user } = useAuth();
   const [activeLang, setActiveLang] = useState<'en' | 'hi' | 'te'>(language);
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    setActiveLang(language);
+  }, [language]);
 
   const verse = daily.verse;
   const translation = (
@@ -71,10 +75,10 @@ export const DailyWisdomCard: React.FC<DailyWisdomCardProps> = ({ daily, onBookm
           </div>
           <div>
             <span className="text-[11px] font-bold text-[#F1B941] uppercase tracking-widest block">
-              Daily Gita Contemplation
+              {t.todayContemplationBadge}
             </span>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-white">
-              Bhagavad Gita {verse.chapter_number}.{verse.verse_number}
+              {language === 'te' ? 'భగవద్గీత' : language === 'hi' ? 'भगवद्गीता' : 'Bhagavad Gita'} {verse.chapter_number}.{verse.verse_number}
             </h2>
           </div>
         </div>
@@ -128,7 +132,7 @@ export const DailyWisdomCard: React.FC<DailyWisdomCardProps> = ({ daily, onBookm
       {/* Translation */}
       <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-[#0B192C]/90 border border-slate-700/80">
         <span className="text-xs font-semibold text-[#F1B941] uppercase tracking-wider block mb-1">
-          Eternal Meaning
+          {t.eternalMeaning}
         </span>
         <p className="text-sm sm:text-base text-slate-100 leading-relaxed font-normal">
           {translation}
@@ -140,7 +144,7 @@ export const DailyWisdomCard: React.FC<DailyWisdomCardProps> = ({ daily, onBookm
         <div className="p-4 sm:p-5 rounded-2xl bg-[#0D2440]/70 border border-sky-500/20">
           <div className="flex items-center space-x-2 text-sky-300 text-xs font-semibold uppercase tracking-wider mb-2">
             <Sparkles className="w-4 h-4 text-[#F1B941]" />
-            <span>Why This Matters Today</span>
+            <span>{t.whyItMatters}</span>
           </div>
           <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
             {reflection}
@@ -150,10 +154,14 @@ export const DailyWisdomCard: React.FC<DailyWisdomCardProps> = ({ daily, onBookm
         <div className="p-4 sm:p-5 rounded-2xl bg-[#0A1A2F]/90 border border-emerald-500/20">
           <div className="flex items-center space-x-2 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <Compass className="w-4 h-4" />
-            <span>Today's Practical Focus</span>
+            <span>{t.todayFocus}</span>
           </div>
           <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-            {daily.practical_focus || "Dedicate every action today with total attention, free from the burden of anxious comparison."}
+            {daily.practical_focus || (
+              language === 'te' ? "ఆందోళన లేదా పోలికల భారం లేకుండా నేటి ప్రతి పనిని పూర్తి ఏకాగ్రతతో అంకితభావంతో చేయండి." :
+              language === 'hi' ? "चिंता या तुलना के बोझ से मुक्त होकर, आज के प्रत्येक कर्म को पूर्ण एकाग्रता से समर्पित करें।" :
+              "Dedicate every action today with total attention, free from the burden of anxious comparison."
+            )}
           </p>
         </div>
       </div>
