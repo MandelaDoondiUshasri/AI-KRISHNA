@@ -319,3 +319,4 @@ export const WisdomCardGenerator: React.FC = () => {
     </div>
   );
 };
+

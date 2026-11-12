@@ -238,3 +238,4 @@ export const MoodMirror: React.FC = () => {
     </div>
   );
 };
+

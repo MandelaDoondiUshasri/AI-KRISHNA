@@ -41,3 +41,4 @@ class UserLetter(Base):
     verse_referenced = Column(String(50), nullable=True)
     is_ephemeral = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+

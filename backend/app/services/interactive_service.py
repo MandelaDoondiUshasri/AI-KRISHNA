@@ -604,3 +604,4 @@ class InteractiveService:
         return KURUKSHETRA_STAGES
 
 interactive_service = InteractiveService()
+

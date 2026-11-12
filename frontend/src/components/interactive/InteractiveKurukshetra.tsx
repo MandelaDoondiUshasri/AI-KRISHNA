@@ -225,3 +225,4 @@ export const InteractiveKurukshetra: React.FC = () => {
     </div>
   );
 };
+

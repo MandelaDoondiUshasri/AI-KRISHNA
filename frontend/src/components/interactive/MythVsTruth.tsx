@@ -116,3 +116,4 @@ export const MythVsTruth: React.FC = () => {
     </div>
   );
 };
+

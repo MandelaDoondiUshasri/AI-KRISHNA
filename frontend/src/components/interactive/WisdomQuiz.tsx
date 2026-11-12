@@ -231,3 +231,4 @@ export const WisdomQuiz: React.FC = () => {
     </div>
   );
 };
+

@@ -172,3 +172,4 @@ export const RandomWisdom: React.FC = () => {
     </div>
   );
 };
+

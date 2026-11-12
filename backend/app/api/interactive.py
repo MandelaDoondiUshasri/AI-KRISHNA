@@ -324,3 +324,4 @@ def toggle_challenge_task(
         "streak_count": record.streak_count,
         "is_completed": record.is_completed
     }
+

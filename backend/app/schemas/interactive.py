@@ -21,3 +21,4 @@ class ChallengeToggleRequest(BaseModel):
     task_id: int
     goal_type: str
     session_id: Optional[str] = None
+
