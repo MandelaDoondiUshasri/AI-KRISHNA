@@ -25,37 +25,38 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-[#081225]/90 border-b border-[#F1B941]/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-[#081225]/95 border-b border-[#F1B941]/20 shadow-md">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 gap-2">
           
-          {/* Logo & Brand */}
+          {/* Logo & Brand (No wrap) */}
           <div 
             onClick={() => setActiveTab('home')}
-            className="flex items-center space-x-3 cursor-pointer group"
+            className="flex items-center space-x-2 sm:space-x-3 cursor-pointer group shrink-0"
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#1E3E62] via-[#008DDA] to-[#F1B941] p-0.5 shadow-lg shadow-[#008DDA]/20 group-hover:scale-105 transition-transform duration-300">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-[#1E3E62] via-[#008DDA] to-[#F1B941] p-0.5 shadow-md shadow-[#008DDA]/20 group-hover:scale-105 transition-transform duration-300 shrink-0">
               <div className="w-full h-full rounded-full bg-[#081225] flex items-center justify-center">
-                <span className="text-xl select-none">🦚</span>
+                <span className="text-lg sm:text-xl select-none leading-none">🦚</span>
               </div>
             </div>
-            <div>
-              <div className="flex items-center space-x-1.5">
-                <span className="text-lg font-bold tracking-wider gold-gradient-text uppercase font-serif">
+            
+            <div className="flex flex-col justify-center shrink-0">
+              <div className="flex items-center space-x-1.5 leading-none">
+                <span className="text-sm sm:text-base lg:text-lg font-bold tracking-wider gold-gradient-text uppercase font-serif whitespace-nowrap">
                   {t.appName}
                 </span>
-                <span className="px-1.5 py-0.5 text-[10px] font-medium bg-[#F1B941]/10 text-[#F1B941] rounded border border-[#F1B941]/30">
+                <span className="px-1.5 py-0.5 text-[9px] font-semibold bg-[#F1B941]/10 text-[#F1B941] rounded border border-[#F1B941]/30 leading-none">
                   AI
                 </span>
               </div>
-              <p className="text-[11px] text-[#94A3B8] tracking-wider hidden sm:block">
+              <p className="text-[10px] text-[#94A3B8] tracking-wider whitespace-nowrap hidden sm:block mt-0.5 leading-tight">
                 {t.tagline}
               </p>
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
+          {/* Desktop Navigation Links (with whitespace-nowrap so text NEVER breaks) */}
+          <nav className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -63,31 +64,54 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center space-x-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 ${
                     isActive
-                      ? 'bg-[#1E3E62]/80 text-[#F1B941] border border-[#F1B941]/40 shadow-sm shadow-[#F1B941]/10'
+                      ? 'bg-[#1E3E62] text-[#F1B941] border border-[#F1B941]/40 shadow-sm shadow-[#F1B941]/15'
                       : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-[#F1B941]' : 'text-slate-400'}`} />
-                  <span>{item.label}</span>
+                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#F1B941]' : 'text-slate-400'}`} />
+                  <span className="whitespace-nowrap">{item.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Mid-size Desktop Nav (Tablets/Smaller Desktops: compact icons + text) */}
+          <nav className="hidden md:flex lg:hidden items-center space-x-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  title={item.label}
+                  className={`flex items-center space-x-1 px-2 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-200 ${
+                    isActive
+                      ? 'bg-[#1E3E62] text-[#F1B941] border border-[#F1B941]/40'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5 shrink-0" />
+                  <span className="whitespace-nowrap">{item.label}</span>
                 </button>
               );
             })}
           </nav>
 
           {/* Right Actions: Language Selector & Auth */}
-          <div className="hidden md:flex items-center space-x-3">
+          <div className="hidden md:flex items-center space-x-2 shrink-0">
             {/* Language Switcher */}
-            <div className="relative flex items-center bg-[#0B192C] border border-[#F1B941]/30 rounded-lg p-1 text-xs">
-              <Globe className="w-3.5 h-3.5 text-[#F1B941] ml-1.5 mr-1" />
+            <div className="flex items-center bg-[#0B192C] border border-[#F1B941]/30 rounded-lg p-0.5 text-xs shrink-0">
+              <Globe className="w-3.5 h-3.5 text-[#F1B941] ml-1 mr-0.5 shrink-0" />
               {(['en', 'hi', 'te'] as Language[]).map((lang) => (
                 <button
                   key={lang}
                   onClick={() => setLanguage(lang)}
-                  className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                  className={`px-1.5 py-0.5 rounded text-[11px] font-semibold whitespace-nowrap transition-colors ${
                     language === lang
-                      ? 'bg-[#F1B941] text-[#081225] font-semibold'
+                      ? 'bg-[#F1B941] text-[#081225]'
                       : 'text-slate-300 hover:text-white'
                   }`}
                 >
@@ -98,26 +122,26 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
 
             {/* User Profile / Auth Button */}
             {user ? (
-              <div className="flex items-center space-x-2 pl-2 border-l border-slate-700">
-                <div className="text-right">
-                  <p className="text-xs font-medium text-slate-200">{user.full_name || user.email.split('@')[0]}</p>
-                  <span className="text-[10px] text-[#F1B941] uppercase tracking-wider">{user.role}</span>
+              <div className="flex items-center space-x-2 pl-2 border-l border-slate-700 shrink-0">
+                <div className="text-right leading-none">
+                  <p className="text-xs font-semibold text-slate-200 whitespace-nowrap">{user.full_name || user.email.split('@')[0]}</p>
+                  <span className="text-[9px] text-[#F1B941] uppercase tracking-wider">{user.role}</span>
                 </div>
                 <button
                   onClick={logout}
                   title={t.logout}
-                  className="p-2 rounded-lg bg-slate-800/80 hover:bg-red-500/20 text-slate-400 hover:text-red-400 border border-slate-700 transition-colors"
+                  className="p-1.5 rounded-lg bg-slate-800 hover:bg-red-500/20 text-slate-400 hover:text-red-400 border border-slate-700 transition-colors shrink-0"
                 >
-                  <LogOut className="w-4 h-4" />
+                  <LogOut className="w-3.5 h-3.5" />
                 </button>
               </div>
             ) : (
               <button
                 onClick={openAuthModal}
-                className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-[#F1B941] to-[#D4AF37] text-[#081225] hover:brightness-110 shadow-md shadow-[#F1B941]/20 transition-all"
+                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap bg-gradient-to-r from-[#F1B941] to-[#D4AF37] text-[#081225] hover:brightness-110 shadow-md shadow-[#F1B941]/20 transition-all shrink-0"
               >
-                <LogIn className="w-3.5 h-3.5" />
-                <span>{t.login}</span>
+                <LogIn className="w-3.5 h-3.5 shrink-0" />
+                <span className="whitespace-nowrap">{t.login}</span>
               </button>
             )}
           </div>
@@ -126,9 +150,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
           <div className="md:hidden flex items-center space-x-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800"
+              className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -147,11 +171,11 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
                   setActiveTab(item.id);
                   setMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium ${
+                className={`w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap ${
                   isActive ? 'bg-[#1E3E62] text-[#F1B941]' : 'text-slate-300'
                 }`}
               >
-                <Icon className="w-4 h-4 text-[#F1B941]" />
+                <Icon className="w-4 h-4 text-[#F1B941] shrink-0" />
                 <span>{item.label}</span>
               </button>
             );
@@ -163,11 +187,11 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
                 <button
                   key={lang}
                   onClick={() => setLanguage(lang)}
-                  className={`px-2 py-1 rounded text-xs ${
-                    language === lang ? 'bg-[#F1B941] text-[#081225] font-semibold' : 'text-slate-300'
+                  className={`px-2 py-1 rounded text-xs font-semibold ${
+                    language === lang ? 'bg-[#F1B941] text-[#081225]' : 'text-slate-300'
                   }`}
                 >
-                  {lang === 'en' ? 'English' : lang === 'hi' ? 'हिन्दी' : 'తెలుగు'}
+                  {lang === 'en' ? 'EN' : lang === 'hi' ? 'हिन्दी' : 'తెలుగు'}
                 </button>
               ))}
             </div>
@@ -186,7 +210,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
                   openAuthModal();
                   setMobileMenuOpen(false);
                 }}
-                className="text-xs px-3 py-1.5 rounded bg-[#F1B941] text-[#081225] font-semibold"
+                className="text-xs px-3 py-1.5 rounded-xl bg-[#F1B941] text-[#081225] font-bold"
               >
                 {t.login}
               </button>
@@ -197,4 +221,3 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
     </header>
   );
 };
-

@@ -84,12 +84,12 @@ export const GitaExplorerPage: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
+        <div className="text-center max-w-3xl mx-auto mb-8">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#1E3E62]/80 border border-[#F1B941]/40 mb-3 text-xs text-[#F1B941]">
             <BookOpen className="w-3.5 h-3.5" />
-            <span>Bhagavad Gita Knowledge Base</span>
+            <span className="whitespace-nowrap">Bhagavad Gita Knowledge Base</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-3">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-white mb-2 leading-tight">
             Explore All 18 Chapters & 700 Verses
           </h1>
           <p className="text-xs sm:text-sm text-slate-400">
@@ -98,21 +98,21 @@ export const GitaExplorerPage: React.FC = () => {
         </div>
 
         {/* Search & Filter Bar */}
-        <div className="krishna-card rounded-2xl p-4 sm:p-5 mb-10 border border-[#F1B941]/30">
-          <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
+        <div className="krishna-card rounded-2xl p-4 sm:p-5 mb-8 border border-[#F1B941]/30 shadow-lg">
+          <form onSubmit={handleSearch} className="flex flex-col sm:flex-row items-stretch gap-2.5">
             
-            <div className="relative flex-1">
-              <Search className="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400" />
+            <div className="relative flex-1 min-w-0">
+              <Search className="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400 shrink-0" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by keyword, concept, or verse (e.g. 'karma', 'overthinking', 'anger', '2.47')..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#081225] border border-slate-700 text-xs sm:text-sm text-white placeholder-slate-500 focus:border-[#F1B941] focus:outline-none"
+                placeholder="Search keyword, concept, or verse (e.g. 'karma', 'overthinking', '2.47')..."
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#081225] border border-slate-700 text-xs sm:text-sm text-white placeholder-slate-500 focus:border-[#F1B941] focus:outline-none truncate"
               />
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <select
                 value={selectedSituation}
                 onChange={(e) => {
@@ -124,7 +124,7 @@ export const GitaExplorerPage: React.FC = () => {
                     });
                   }
                 }}
-                className="px-3 py-2.5 rounded-xl bg-[#081225] border border-slate-700 text-xs text-slate-200 focus:border-[#F1B941] focus:outline-none"
+                className="w-full sm:w-auto px-3 py-2.5 rounded-xl bg-[#081225] border border-slate-700 text-xs text-slate-200 focus:border-[#F1B941] focus:outline-none shrink-0"
               >
                 <option value="">Filter by Life Situation</option>
                 {situations.map(s => (
@@ -134,7 +134,7 @@ export const GitaExplorerPage: React.FC = () => {
 
               <button
                 type="submit"
-                className="px-5 py-2.5 rounded-xl bg-[#F1B941] text-[#081225] font-bold text-xs uppercase tracking-wider hover:brightness-110 transition-all shadow-md shadow-[#F1B941]/20"
+                className="px-5 py-2.5 rounded-xl bg-[#F1B941] text-[#081225] font-bold text-xs uppercase tracking-wider hover:brightness-110 transition-all shadow-md shadow-[#F1B941]/20 whitespace-nowrap shrink-0"
               >
                 Search
               </button>
@@ -143,7 +143,7 @@ export const GitaExplorerPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={clearSearch}
-                  className="px-3 py-2.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs border border-slate-700 transition-colors"
+                  className="px-3 py-2.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs border border-slate-700 transition-colors whitespace-nowrap shrink-0"
                 >
                   Clear
                 </button>
@@ -153,8 +153,8 @@ export const GitaExplorerPage: React.FC = () => {
           </form>
 
           {/* Quick Situation Pills */}
-          <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-slate-800/80">
-            <span className="text-[11px] text-slate-400 flex items-center mr-1">
+          <div className="flex flex-wrap items-center gap-1.5 mt-3 pt-3 border-t border-slate-800/80">
+            <span className="text-[11px] text-slate-400 mr-1 whitespace-nowrap shrink-0">
               Popular tags:
             </span>
             {situations.slice(0, 6).map(s => (
@@ -167,7 +167,7 @@ export const GitaExplorerPage: React.FC = () => {
                     setSearchResults(res.results);
                   });
                 }}
-                className={`text-[10px] px-2.5 py-1 rounded-full border transition-all ${
+                className={`text-[10px] px-2.5 py-1 rounded-full border transition-all whitespace-nowrap ${
                   selectedSituation === s.id
                     ? 'bg-[#F1B941] text-[#081225] font-semibold border-[#F1B941]'
                     : 'bg-[#081225] text-slate-300 border-slate-700 hover:border-slate-500'

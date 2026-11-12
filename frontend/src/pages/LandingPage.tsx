@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { 
-  Sparkles, MessageSquare, Compass, ArrowRight, ShieldCheck, Heart, 
-  Brain, Briefcase, Flame, HeartHandshake, Feather, Target, ChevronDown, 
-  ChevronUp, Globe, CheckCircle2, BookOpen
+  Sparkles, MessageSquare, Compass, ArrowRight, ShieldCheck, 
+  Brain, Briefcase, Flame, HeartHandshake, ChevronDown, 
+  ChevronUp, BookOpen, Check
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import krishnaDivineImg from '../assets/krishna_divine.jpg';
 
 interface LandingPageProps {
   onStartChat: () => void;
@@ -33,12 +34,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
     {
       title: "Controlling Anger & Hurt Pride",
       icon: Flame,
-      desc: "Someone insulted you? Learn how to halt the destructive chain reaction of rage before it ruins your life."
+      desc: "Someone insulted you? Learn how to halt the destructive chain reaction of rage before it ruins your peace."
     },
     {
       title: "Relationships & Heartbreak",
       icon: HeartHandshake,
-      desc: "Suffering from attachment or broken promises? Love with pure depth without losing your soul's peace."
+      desc: "Suffering from attachment or broken promises? Love with pure depth without losing your soul's anchor."
     },
     {
       title: "Fear of Failure in Ventures",
@@ -90,72 +91,133 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
   return (
     <div className="min-h-screen text-slate-100 selection:bg-[#F1B941] selection:text-black">
       
-      {/* HERO SECTION */}
-      <section className="relative pt-20 pb-24 overflow-hidden border-b border-[#F1B941]/20">
+      {/* HERO SECTION WITH DIVINE KRISHNA VISUAL */}
+      <section className="relative pt-12 pb-20 overflow-hidden border-b border-[#F1B941]/20">
         
         {/* Glow Spheres */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-[#008DDA]/15 via-[#F1B941]/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-[#008DDA]/15 via-[#F1B941]/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Divine Badge */}
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#1E3E62]/80 border border-[#F1B941]/40 mb-6 shadow-md shadow-[#F1B941]/10 animate-fade-in">
-            <span className="text-lg">🦚</span>
-            <span className="text-xs font-semibold tracking-wider text-[#F1B941] uppercase">
-              Bhagavad Gita Spiritual Intelligence
-            </span>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            
+            {/* Left Column: Hero Content */}
+            <div className="lg:col-span-7 text-left space-y-6">
+              
+              {/* Divine Badge */}
+              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#1E3E62]/80 border border-[#F1B941]/40 shadow-md shadow-[#F1B941]/10">
+                <span className="text-base">🦚</span>
+                <span className="text-xs font-semibold tracking-wider text-[#F1B941] uppercase whitespace-nowrap">
+                  Bhagavad Gita Spiritual Intelligence
+                </span>
+              </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold tracking-tight mb-6">
-            <span className="text-white block">AI KRISHNA</span>
-            <span className="gold-gradient-text text-3xl sm:text-5xl lg:text-6xl block mt-2">
-              Your Life Companion
-            </span>
-          </h1>
+              {/* Main Headline */}
+              <div className="space-y-1">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-extrabold tracking-tight text-white leading-tight">
+                  AI KRISHNA
+                </h1>
+                <p className="gold-gradient-text text-2xl sm:text-3xl lg:text-4xl font-serif font-bold">
+                  Your Life Companion
+                </p>
+              </div>
 
-          {/* Subtitle */}
-          <p className="text-lg sm:text-xl text-amber-100/90 max-w-3xl mx-auto mb-4 font-serif italic">
-            "When life gets confusing, find clarity through timeless wisdom."
-          </p>
+              {/* Subtitle / Quote */}
+              <blockquote className="border-l-2 border-[#F1B941] pl-4 py-1">
+                <p className="text-base sm:text-lg text-amber-100 font-serif italic leading-relaxed">
+                  "When life gets confusing, find clarity through timeless wisdom."
+                </p>
+              </blockquote>
 
-          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-            {t.heroSubheadline}
-          </p>
+              <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
+                {t.heroSubheadline}
+              </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <button
-              onClick={onStartChat}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-[#F1B941] via-[#E5A93C] to-[#D4AF37] text-[#081225] font-bold text-sm uppercase tracking-wider hover:brightness-110 shadow-xl shadow-[#F1B941]/25 hover:scale-105 transition-all flex items-center justify-center space-x-2.5"
-            >
-              <MessageSquare className="w-5 h-5 text-[#081225]" />
-              <span>{t.startChat}</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+              {/* Primary Call to Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                <button
+                  onClick={onStartChat}
+                  className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#F1B941] via-[#E5A93C] to-[#D4AF37] text-[#081225] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-xl shadow-[#F1B941]/25 hover:scale-[1.02] transition-all flex items-center justify-center space-x-2"
+                >
+                  <MessageSquare className="w-4 h-4 text-[#081225]" />
+                  <span>{t.startChat}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
 
-            <button
-              onClick={onExploreGita}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-[#0B192C] hover:bg-[#1E3E62] text-slate-200 hover:text-white border border-[#F1B941]/40 font-semibold text-sm tracking-wide transition-all shadow-lg flex items-center justify-center space-x-2"
-            >
-              <BookOpen className="w-5 h-5 text-[#F1B941]" />
-              <span>{t.exploreGita}</span>
-            </button>
-          </div>
+                <button
+                  onClick={onExploreGita}
+                  className="px-6 py-3.5 rounded-2xl bg-[#0B192C] hover:bg-[#1E3E62] text-slate-200 hover:text-white border border-[#F1B941]/40 font-semibold text-xs tracking-wide transition-all shadow-md flex items-center justify-center space-x-2"
+                >
+                  <BookOpen className="w-4 h-4 text-[#F1B941]" />
+                  <span>{t.exploreGita}</span>
+                </button>
+              </div>
 
-          {/* Real Life Dilemma Preview Card */}
-          <div className="max-w-2xl mx-auto text-left krishna-card rounded-2xl p-5 sm:p-6 border border-[#F1B941]/30 shadow-2xl">
-            <div className="flex items-center space-x-2 text-xs text-[#F1B941] mb-2 font-semibold uppercase tracking-wider">
-              <Sparkles className="w-4 h-4" />
-              <span>The Context Bridge Experience</span>
+              {/* Trust Badges */}
+              <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-slate-800 text-xs text-slate-400">
+                <div className="flex items-center space-x-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>All 18 Chapters</span>
+                </div>
+                <div className="flex items-center space-x-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>700 Verses Structured</span>
+                </div>
+                <div className="flex items-center space-x-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>English • हिन्दी • తెలుగు</span>
+                </div>
+              </div>
+
             </div>
-            <p className="text-sm text-slate-200 italic mb-3">
-              "I am working very hard, but my colleagues are getting promotions while I am not. I feel disappointed."
-            </p>
-            <div className="pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs text-slate-400">
-              <span className="text-emerald-400 font-medium">Understands disappointment & comparison</span>
-              <span className="text-[#F1B941] font-mono">Mapped to BG 2.47 & 3.35</span>
+
+            {/* Right Column: Divine Krishna Artwork Card */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative w-full max-w-md">
+                
+                {/* Glowing halo behind card */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#008DDA]/20 via-[#F1B941]/30 to-amber-500/20 rounded-3xl blur-2xl transform scale-105 pointer-events-none"></div>
+
+                {/* Card Container */}
+                <div className="relative rounded-3xl overflow-hidden border-2 border-[#F1B941]/40 bg-[#0B192C] shadow-2xl">
+                  
+                  {/* Krishna Artwork */}
+                  <div className="relative h-80 sm:h-96 w-full overflow-hidden bg-slate-900">
+                    <img 
+                      src={krishnaDivineImg} 
+                      alt="Lord Krishna Divine Presence"
+                      className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C] via-transparent to-transparent"></div>
+                  </div>
+
+                  {/* Card Bottom Meta */}
+                  <div className="p-5 space-y-3">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-serif font-bold text-[#F1B941] flex items-center space-x-1.5">
+                        <span>🦚</span>
+                        <span>Sri Krishna's Timeless Counsel</span>
+                      </span>
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-[#F1B941]/10 text-[#F1B941] border border-[#F1B941]/30">
+                        Mahabharata • Kurukshetra
+                      </span>
+                    </div>
+
+                    <p className="font-serif italic text-xs sm:text-sm text-slate-200 leading-relaxed">
+                      "योगस्थः कुरु कर्माणि सङ्गं त्यक्त्वा धनञ्जय। सिद्ध्यसिद्ध्यోః సమో భూత్వా సమత్వం యోగ ఉచ్యతే॥"
+                    </p>
+
+                    <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                      <span>Equanimity in all circumstances is Yoga.</span>
+                      <span className="text-[#F1B941] font-mono">BG 2.48</span>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
             </div>
+
           </div>
 
         </div>
@@ -172,7 +234,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
             <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-4">
               The 9-Step Context Bridge Engine
             </h2>
-            <p className="text-sm text-slate-400 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
               We never return random, disconnected Gita quotes. Our proprietary intelligence engine deeply deconstructs your real-world predicament and builds a contextual bridge between ancient metaphysics and everyday life.
             </p>
           </div>
@@ -215,7 +277,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
             <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-4">
               Timeless Wisdom for Modern Struggles
             </h2>
-            <p className="text-sm text-slate-400 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
               Lord Krishna's dialogue with Arjuna was not about abstract theology—it took place in the middle of a paralyzing moral, emotional, and psychological crisis.
             </p>
           </div>
@@ -263,7 +325,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
               <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-6">
                 Complete Knowledge Base: 18 Chapters & 700 Verses
               </h2>
-              <p className="text-sm text-slate-300 leading-relaxed mb-6">
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
                 Explore every chapter and verse with authentic Devanagari Sanskrit, Romanized IAST transliteration, and rich philosophical purports.
               </p>
               
@@ -327,7 +389,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
           <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-4">
             Guidance in Your Mother Tongue
           </h2>
-          <p className="text-sm text-slate-400 max-w-xl mx-auto mb-8">
+          <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto mb-8">
             Experience natural, empathetic spiritual guidance crafted in English, Hindi, and Telugu—without rigid or awkward machine translations.
           </p>
 
@@ -370,7 +432,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
             <span className="text-[11px] font-semibold text-[#F1B941] block mb-2">
               Sample Krishna Greeting:
             </span>
-            <p className="text-sm text-slate-100 font-serif leading-relaxed italic">
+            <p className="text-xs sm:text-sm text-slate-100 font-serif leading-relaxed italic">
               "{t.welcomeMessage}"
             </p>
           </div>
@@ -401,10 +463,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
                 >
                   <button
                     onClick={() => toggleFaq(idx)}
-                    className="w-full p-4 text-left flex items-center justify-between text-sm font-semibold text-slate-200 hover:text-[#F1B941] transition-colors"
+                    className="w-full p-4 text-left flex items-center justify-between text-xs sm:text-sm font-semibold text-slate-200 hover:text-[#F1B941] transition-colors"
                   >
                     <span>{faq.q}</span>
-                    {isOpen ? <ChevronUp className="w-4 h-4 text-[#F1B941]" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+                    {isOpen ? <ChevronUp className="w-4 h-4 text-[#F1B941] shrink-0" /> : <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />}
                   </button>
                   {isOpen && (
                     <div className="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-3">
@@ -432,4 +494,3 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
     </div>
   );
 };
-
