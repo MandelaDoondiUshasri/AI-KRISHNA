@@ -1,0 +1,24 @@
+{
+  "name": "ai-krishna-your-life-companion",
+  "version": "1.0.0",
+  "description": "AI KRISHNA – Your Life Companion: An intelligent spiritual guidance platform inspired by the Bhagavad Gita.",
+  "scripts": {
+    "frontend:dev": "npm --prefix frontend run dev",
+    "frontend:build": "npm --prefix frontend run build",
+    "backend:dev": "cd backend && python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload",
+    "backend:test": "cd backend && python test_all_features.py",
+    "backend:seed": "cd backend && python app/scripts/init_db.py"
+  },
+  "keywords": [
+    "ai-krishna",
+    "bhagavad-gita",
+    "spiritual-guidance",
+    "context-bridge-engine",
+    "fastapi",
+    "react",
+    "typescript"
+  ],
+  "author": "Google DeepMind Team",
+  "license": "MIT"
+}
+

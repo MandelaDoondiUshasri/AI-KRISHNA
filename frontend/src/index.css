@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --royal-navy: #0B192C;
+    --divine-blue: #1E3E62;
+    --peacock-blue: #008DDA;
+    --gold-primary: #F1B941;
+    --gold-light: #FCEFD5;
+    --gold-dark: #B8860B;
+    --ivory-bg: #FAF9F6;
+    --parchment: #F4EBD9;
+    --card-bg: rgba(255, 255, 255, 0.95);
+  }
+
+  body {
+    background-color: #081225;
+    color: #E2E8F0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B192C;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E3E62;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F1B941;
+}
+
+/* Divine Glow and Accents */
+.gold-glow {
+  box-shadow: 0 0 25px rgba(241, 185, 65, 0.25);
+}
+
+.gold-border {
+  border-color: rgba(241, 185, 65, 0.35);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FFFDF0 0%, #F5C754 50%, #C99726 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.krishna-card {
+  background: linear-gradient(180deg, rgba(16, 37, 66, 0.85) 0%, rgba(11, 25, 44, 0.95) 100%);
+  border: 1px solid rgba(241, 185, 65, 0.2);
+  backdrop-filter: blur(12px);
+}
+
+.krishna-card:hover {
+  border-color: rgba(241, 185, 65, 0.45);
+}
+
+.sanskrit-font {
+  font-family: 'Georgia', 'Noto Serif Devanagari', 'Cambria', serif;
+}

@@ -1,0 +1,135 @@
+export type Language = 'en' | 'hi' | 'te';
+
+export interface User {
+  id: number;
+  email: string;
+  full_name: string | null;
+  preferred_language: Language;
+  role: 'user' | 'admin';
+  created_at: string;
+}
+
+export interface AuthResponse {
+  access_token: string;
+  token_type: string;
+  user: User;
+}
+
+export interface Chapter {
+  id: number;
+  chapter_number: number;
+  name_sanskrit: string;
+  name_transliteration: string;
+  name_english: string;
+  verses_count: number;
+  summary_en: string | null;
+  summary_hi: string | null;
+  summary_te: string | null;
+  key_themes: string | null;
+}
+
+export interface Verse {
+  id: number;
+  chapter_number: number;
+  verse_number: number;
+  slok_sanskrit: string;
+  transliteration: string;
+  translation_en: string;
+  translation_hi: string | null;
+  translation_te: string | null;
+  explanation: string | null;
+  core_concepts: string | null;
+  life_situations: string | null;
+  chapter_title_en: string | null;
+}
+
+export interface VerseReference {
+  id?: number;
+  chapter_number: number;
+  verse_number: number;
+  slok_sanskrit: string;
+  transliteration: string;
+  translation: string;
+  chapter_title: string;
+}
+
+export interface StructuredResponse {
+  situation_understanding: string;
+  krishna_wisdom: string;
+  verse: VerseReference | null;
+  is_direct_verse: boolean;
+  how_it_applies: string;
+  practical_steps: string[];
+  thought_to_remember: string;
+  emotion_detected?: string;
+  disclaimer?: string;
+  is_crisis?: boolean;
+}
+
+export interface Message {
+  id: number;
+  conversation_id: number;
+  sender: 'user' | 'krishna';
+  content: string;
+  emotion_detected?: string | null;
+  verse_id_referenced?: number | null;
+  structured_data?: StructuredResponse | null;
+  created_at: string;
+}
+
+export interface Conversation {
+  id: number;
+  title: string;
+  language: Language;
+  created_at: string;
+  updated_at: string;
+  messages: Message[];
+}
+
+export interface DailyWisdom {
+  id: number;
+  date_str: string;
+  verse: Verse;
+  reflection_en: string;
+  reflection_hi: string | null;
+  reflection_te: string | null;
+  practical_focus: string | null;
+  created_at: string;
+}
+
+export interface Favorite {
+  id: number;
+  user_id: number;
+  item_type: 'verse' | 'message';
+  verse_id?: number | null;
+  message_id?: number | null;
+  title?: string | null;
+  notes?: string | null;
+  verse?: Verse | null;
+  created_at: string;
+}
+
+export interface AdminMetrics {
+  total_users: number;
+  active_users: number;
+  total_conversations: number;
+  total_messages: number;
+  total_verses: number;
+  popular_situations: { emotion: string; count: number }[];
+  most_referenced_verses: { reference: string; transliteration: string; count: number }[];
+}
+
+export interface AIConfig {
+  provider: string;
+  gemini_configured: boolean;
+  openai_configured: boolean;
+  current_model: string;
+}
+
+export interface LifeSituation {
+  id: string;
+  title: string;
+  icon: string;
+  description: string;
+}
+

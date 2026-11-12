@@ -1,0 +1,86 @@
+from typing import List, Optional
+from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy.orm import Session
+from app.core.database import get_db
+from app.models.gita import Chapter, Verse
+from app.schemas.gita import ChapterOut, VerseOut, GitaSearchResponse
+from app.services.gita_knowledge import gita_knowledge_service
+
+router = APIRouter(prefix="/gita", tags=["Bhagavad Gita Knowledge Base"])
+
+LIFE_SITUATIONS = [
+    {"id": "career", "title": "Career & Workplace", "icon": "briefcase", "description": "Navigating office politics, comparison, delayed appraisals, and authentic calling (Swadharma)."},
+    {"id": "overthinking", "title": "Overthinking & Anxiety", "icon": "brain", "description": "Quieting a racing mind, future dread, sleeplessness, and finding inner stillness."},
+    {"id": "fear of failure", "title": "Fear of Failure", "icon": "shield-alert", "description": "Overcoming the paralyzing dread of setbacks, startup risk, and exam stress."},
+    {"id": "anger control", "title": "Anger & Hurt Ego", "icon": "flame", "description": "Cooling impulsive fury, handling insults, and breaking the destructive chain reaction of rage."},
+    {"id": "relationships", "title": "Relationships & Detachment", "icon": "heart-handshake", "description": "Loving unconditionally without possessive attachment, heartbreak, and managing toxic ties."},
+    {"id": "purpose", "title": "Purpose & Direction", "icon": "compass", "description": "Rediscovering meaning when feeling empty, lost, or facing monumental life crossroads."},
+    {"id": "grief", "title": "Grief, Loss & Mortality", "icon": "feather", "description": "Coping with the loss of loved ones, impermanence, and recognizing the eternal nature of the soul."},
+    {"id": "focus", "title": "Discipline & Meditation", "icon": "target", "description": "Overcoming procrastination, addictions, distractions, and building relentless consistency."}
+]
+
+@router.get("/chapters", response_model=List[ChapterOut])
+def get_chapters(db: Session = Depends(get_db)):
+    chapters = db.query(Chapter).order_by(Chapter.chapter_number.asc()).all()
+    return chapters
+
+@router.get("/chapters/{chapter_number}")
+def get_chapter_detail(chapter_number: int, db: Session = Depends(get_db)):
+    chapter = db.query(Chapter).filter(Chapter.chapter_number == chapter_number).first()
+    if not chapter:
+        raise HTTPException(status_code=404, detail="Chapter not found")
+    verses = db.query(Verse).filter(Verse.chapter_number == chapter_number).order_by(Verse.verse_number.asc()).all()
+    return {
+        "chapter": ChapterOut.model_validate(chapter),
+        "verses": [VerseOut.model_validate(v) for v in verses]
+    }
+
+@router.get("/verses/{chapter_number}/{verse_number}", response_model=VerseOut)
+def get_verse(chapter_number: int, verse_number: int, db: Session = Depends(get_db)):
+    verse = db.query(Verse).filter(
+        Verse.chapter_number == chapter_number,
+        Verse.verse_number == verse_number
+    ).first()
+    if not verse:
+        raise HTTPException(status_code=404, detail="Verse not found")
+    return verse
+
+@router.get("/search", response_model=GitaSearchResponse)
+def search_verses(
+    q: Optional[str] = Query(None, description="Search keyword or query"),
+    situation: Optional[str] = Query(None, description="Filter by life situation"),
+    chapter: Optional[int] = Query(None, description="Filter by chapter number"),
+    db: Session = Depends(get_db)
+):
+    query_str = q or ""
+    
+    # If query is provided, use our hybrid vector + keyword service
+    if query_str.strip() or situation:
+        results = gita_knowledge_service.search_verses(
+            query=query_str,
+            situation=situation,
+            chapter_number=chapter,
+            top_k=20
+        )
+        # Load from DB for consistency
+        db_verses = []
+        for v_dict, score in results:
+            v_row = db.query(Verse).filter(
+                Verse.chapter_number == v_dict["chapter_number"],
+                Verse.verse_number == v_dict["verse_number"]
+            ).first()
+            if v_row:
+                db_verses.append(v_row)
+        return GitaSearchResponse(total=len(db_verses), results=[VerseOut.model_validate(v) for v in db_verses])
+
+    # Otherwise browse by chapter or list all
+    db_query = db.query(Verse)
+    if chapter:
+        db_query = db_query.filter(Verse.chapter_number == chapter)
+    verses = db_query.order_by(Verse.chapter_number.asc(), Verse.verse_number.asc()).all()
+    return GitaSearchResponse(total=len(verses), results=[VerseOut.model_validate(v) for v in verses])
+
+@router.get("/situations")
+def get_situations():
+    return LIFE_SITUATIONS
+
