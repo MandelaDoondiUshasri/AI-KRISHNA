@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.database import Base, engine, SessionLocal
-from app.api import auth, chat, gita, daily, user, admin
+from app.api import auth, chat, gita, daily, user, admin, interactive
 from app.services.gita_knowledge import gita_knowledge_service
 from app.models.user import User
 from app.core.security import get_password_hash
@@ -31,6 +31,7 @@ app.include_router(gita.router, prefix=settings.API_V1_STR)
 app.include_router(daily.router, prefix=settings.API_V1_STR)
 app.include_router(user.router, prefix=settings.API_V1_STR)
 app.include_router(admin.router, prefix=settings.API_V1_STR)
+app.include_router(interactive.router, prefix=settings.API_V1_STR)
 
 @app.on_event("startup")
 def on_startup():

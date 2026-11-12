@@ -10,10 +10,18 @@ import { GitaExplorerPage } from './pages/GitaExplorerPage';
 import { DailyWisdomPage } from './pages/DailyWisdomPage';
 import { SavedWisdomPage } from './pages/SavedWisdomPage';
 import { AdminPage } from './pages/AdminPage';
+import { InteractiveHubPage } from './pages/InteractiveHubPage';
 
 export function AppContent() {
   const [activeTab, setActiveTab] = useState('home');
+  const [interactiveFeature, setInteractiveFeature] = useState<string | undefined>(undefined);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+
+  const navigateToInteractive = (featureId?: string) => {
+    setInteractiveFeature(featureId);
+    setActiveTab('interactive');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div className="min-h-screen bg-[#081225] flex flex-col font-sans">
@@ -21,7 +29,12 @@ export function AppContent() {
       {/* Universal Navigation */}
       <Navbar
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={(tab) => {
+          if (tab !== 'interactive') {
+            setInteractiveFeature(undefined);
+          }
+          setActiveTab(tab);
+        }}
         openAuthModal={() => setAuthModalOpen(true)}
       />
 
@@ -31,12 +44,17 @@ export function AppContent() {
           <LandingPage
             onStartChat={() => setActiveTab('chat')}
             onExploreGita={() => setActiveTab('explorer')}
+            onOpenInteractive={navigateToInteractive}
           />
         )}
 
         {activeTab === 'chat' && <ChatPage />}
 
         {activeTab === 'explorer' && <GitaExplorerPage />}
+
+        {activeTab === 'interactive' && (
+          <InteractiveHubPage initialFeature={interactiveFeature} />
+        )}
 
         {activeTab === 'daily' && <DailyWisdomPage />}
 

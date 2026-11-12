@@ -136,3 +136,77 @@ export interface LifeSituation {
   description: string;
 }
 
+export interface MoodItem {
+  id: string;
+  emoji: string;
+  title_en: string;
+  title_hi: string;
+  title_te: string;
+  verse_ref: string;
+  summary_en: string;
+  summary_hi: string;
+  summary_te: string;
+  practice_en: string;
+  practice_hi: string;
+  practice_te: string;
+}
+
+export interface ArjunaScenario {
+  id: string;
+  title: string;
+  context: string;
+  question: string;
+  options: {
+    id: string;
+    text: string;
+    is_gita_aligned: boolean;
+    feedback: string;
+  }[];
+  verse_ref: string;
+  core_lesson: string;
+}
+
+export interface MythItem {
+  id: string;
+  statement: string;
+  is_myth: boolean;
+  title: string;
+  truth_en: string;
+  truth_hi: string;
+  truth_te: string;
+  verse_proof: string;
+}
+
+export interface QuizQuestion {
+  id: number;
+  question: string;
+  options: string[];
+  correct_index: number;
+  explanation: string;
+}
+
+export interface KurukshetraStage {
+  stage_num: number;
+  title: string;
+  description: string;
+  choice_a: string;
+  choice_b: string;
+  aligned_choice: string;
+  lesson: string;
+}
+
+export interface DailyChallengeTask {
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
+export interface DailyChallengeData {
+  date: string;
+  goal_type: string;
+  challenges: DailyChallengeTask[];
+  streak_count: number;
+  is_completed: boolean;
+}
+
+

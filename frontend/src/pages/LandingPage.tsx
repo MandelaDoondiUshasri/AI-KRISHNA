@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { 
   MessageSquare, Compass, ArrowRight, ShieldCheck, 
   Brain, Briefcase, Flame, HeartHandshake, ChevronDown, 
-  ChevronUp, BookOpen, Check
+  ChevronUp, BookOpen, Check, Heart, Shield, Dices, 
+  Target, Trophy, Mail, HelpCircle, Smile, Palette, Sword, Sparkles
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import krishnaDivineImg from '../assets/krishna_divine.jpg';
@@ -10,13 +11,105 @@ import krishnaDivineImg from '../assets/krishna_divine.jpg';
 interface LandingPageProps {
   onStartChat: () => void;
   onExploreGita: () => void;
+  onOpenInteractive?: (featureId?: string) => void;
 }
 
 const situationIcons = [Briefcase, Brain, Flame, HeartHandshake, ShieldCheck, Compass];
 
-export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExploreGita }) => {
+export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExploreGita, onOpenInteractive }) => {
   const { t, language, setLanguage } = useLanguage();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const interactiveFeaturesList = [
+    {
+      id: 'mood',
+      title: language === 'te' ? "కృష్ణుని భావోద్వేగ అద్దం" : language === 'hi' ? "कृष्ण का मूड मिरर" : "Krishna's Mood Mirror",
+      desc: language === 'te' ? "ఆందోళన, కోపం లేదా అయోమయంలో ఉన్నారా? మీ భావనను ఎంచుకుని శాంతి శ్లోకం మరియు ప్రాణాయామం పొందండి." : language === 'hi' ? "तनाव, क्रोध या असमंजस? अपनी मनोदशा चुनें और तुरंत मन शांत करने वाला श्लोक व प्राणायाम पाएं।" : "Select your current emotional state to receive targeted Gita wisdom and 4-7-8 Pranayama calmness.",
+      badge: language === 'te' ? "భావోద్వేగ శాంతి" : language === 'hi' ? "मन की शांति" : "Emotional Calm",
+      icon: Heart,
+      color: "from-rose-500/20 to-amber-500/10 border-rose-500/30 text-rose-400"
+    },
+    {
+      id: 'arjuna',
+      title: language === 'te' ? "నీవే అర్జునుడివైతే" : language === 'hi' ? "यदि आप अर्जुन होते" : "If You Were Arjuna",
+      desc: language === 'te' ? "వాస్తవ జీవిత ధర్మసంకటాలు: కెరీర్, కుటుంబం, నైతికతపై మీ నిర్ణయాన్ని ఎంచుకుని కృష్ణుని దృక్పథాన్ని తెలుసుకోండి." : language === 'hi' ? "करियर, परिवार व धर्मसंकट के वास्तविक परिदृश्यों में अपने विकल्प चुनें और कृष्ण का मार्गदर्शन जानें।" : "Step into moral crossroads: career, family, and duty. Choose your path and discover Krishna's counsel.",
+      badge: language === 'te' ? "ధర్మ సంకటం" : language === 'hi' ? "धर्म संकट" : "Moral Crossroads",
+      icon: Shield,
+      color: "from-blue-500/20 to-cyan-500/10 border-blue-500/30 text-blue-400"
+    },
+    {
+      id: 'problem',
+      title: language === 'te' ? "సమస్యను ఛేదించండి" : language === 'hi' ? "समस्या का विश्लेषण" : "Decode My Problem",
+      desc: language === 'te' ? "మీ వ్యక్తిగత సమస్యను నమోదు చేయండి. AI దాని వెనుక ఉన్న భావోద్వేగం, మూల కారణం మరియు పరిష్కారాన్ని డీకోడ్ చేస్తుంది." : language === 'hi' ? "अपनी समस्या लिखें। एआई इसके पीछे की भावना, मूल कारण, गीता की सीख और समाधान का रोडमैप तैयार करेगा।" : "Submit your challenge. AI dissects root emotion, latent questions, Gita matches, and actionable steps.",
+      badge: language === 'te' ? "డీప్ క్లారిటీ" : language === 'hi' ? "गहन स्पष्टता" : "Deep Clarity",
+      icon: Brain,
+      color: "from-purple-500/20 to-indigo-500/10 border-purple-500/30 text-purple-400"
+    },
+    {
+      id: 'kurukshetra',
+      title: language === 'te' ? "ఇంటరాక్టివ్ కురుక్షేత్రం" : language === 'hi' ? "संवादात्मक कुरुक्षेत्र" : "Interactive Kurukshetra",
+      desc: language === 'te' ? "5-దశల యుద్ధ క్షేత్ర ప్రయాణం. ప్రతి నిర్ణయం మీ మానసిక సమతుల్యతను పరీక్షిస్తుంది. ధర్మ విజేత సర్టిఫికెట్ సాధించండి." : language === 'hi' ? "5-चरणीय कुरुक्षेत्र निर्णय यात्रा। प्रत्येक निर्णय से मन का संतुलन मापें और धर्म विजय प्रमाण पत्र प्राप्त करें।" : "5-stage epic moral battlefield. Make pivotal decisions under pressure and earn your Karma Yoga badge.",
+      badge: language === 'te' ? "యుద్ధ తత్వశాస్త్రం" : language === 'hi' ? "युद्ध दर्शन" : "Battle of Duty",
+      icon: Sword,
+      color: "from-amber-500/20 to-orange-500/10 border-amber-500/30 text-amber-400"
+    },
+    {
+      id: 'quiz',
+      title: language === 'te' ? "కృష్ణుని జ్ఞాన క్విజ్" : language === 'hi' ? "कृष्ण ज्ञान प्रश्नोत्तरी" : "Krishna's Wisdom Quiz",
+      desc: language === 'te' ? "భగవద్గీత బోధనలపై మీ జ్ఞానాన్ని పరీక్షించండి. పాయింట్లు, స్థాయిలు మరియు ప్రత్యేక బ్యాడ్జ్‌లు గెలుచుకోండి." : language === 'hi' ? "भगवद्गीता के उपदेशों पर इंटरैक्टिव क्विज़ खेलें, अंक अर्जित करें और बैज अनलॉक करें।" : "Test your understanding of timeless philosophy with interactive quizzes, points, levels, and badges.",
+      badge: language === 'te' ? "జ్ఞాన పరీక్ష" : language === 'hi' ? "ज्ञान परीक्षा" : "Interactive Quiz",
+      icon: Trophy,
+      color: "from-yellow-500/20 to-amber-500/10 border-yellow-500/30 text-yellow-400"
+    },
+    {
+      id: 'letter',
+      title: language === 'te' ? "కృష్ణునికి ఒక లేఖ" : language === 'hi' ? "कृष्ण को एक पत्र" : "Letter to Krishna",
+      desc: language === 'te' ? "మీ అంతరంగపు బాధలు లేదా ప్రార్థనలను గోప్యంగా రాసుకోండి. కృష్ణుని నుండి సాంత్వనతో కూడిన జవాబును అందుకోండి." : language === 'hi' ? "अपने मन की बात, पीड़ा या प्रार्थना निजी रूप से लिखें और कृष्ण से करुणामय मार्गदर्शन प्राप्त करें।" : "Pour out your deepest thoughts in complete privacy, and receive a compassionate epistolary reflection.",
+      badge: language === 'te' ? "వ్యక్తిగత గోప్యత" : language === 'hi' ? "गोपनीय संवाद" : "Private Sanctuary",
+      icon: Mail,
+      color: "from-teal-500/20 to-emerald-500/10 border-teal-500/30 text-teal-400"
+    },
+    {
+      id: 'daily_challenge',
+      title: language === 'te' ? "నేడు నేను ఏమి చేయాలి?" : language === 'hi' ? "आज मैं क्या करूँ?" : "What Should I Do Today?",
+      desc: language === 'te' ? "మీ వ్యక్తిగత లక్ష్యం ఆధారంగా ప్రతిరోజూ 3 చిన్న సాధనలు, చెక్‌లిస్ట్ మరియు నిరంతర స్ట్రీక్ ట్రాకింగ్." : language === 'hi' ? "अपने लक्ष्य के अनुसार दैनिक 3 सूक्ष्म साधनाएं, चेकलिस्ट और निरंतरता (Streak) ट्रैक करें।" : "Goal-based daily micro-sadhana challenges with checklist and streak tracking for mindful living.",
+      badge: language === 'te' ? "దైనందిన సాధన" : language === 'hi' ? "दैनिक साधना" : "Daily Sadhana",
+      icon: Target,
+      color: "from-emerald-500/20 to-green-500/10 border-emerald-500/30 text-emerald-400"
+    },
+    {
+      id: 'card_gen',
+      title: language === 'te' ? "దివ్య జ్ఞాన కార్డులు" : language === 'hi' ? "विजडम कार्ड जनरेटर" : "Wisdom Card Generator",
+      desc: language === 'te' ? "ప్రముఖ శ్లోకాలు, అనువాదాలతో అందమైన హెచ్‌డీ కార్డులను రూపొందించి డౌన్‌లోడ్ చేయండి లేదా షేర్ చేయండి." : language === 'hi' ? "सत्यापित श्लोकों और अर्थ के साथ आकर्षक सोशल कार्ड बनाएं और उच्च गुणवत्ता में डाउनलोड करें।" : "Generate aesthetic, downloadable high-res wisdom cards with authentic verses and themes to share.",
+      badge: language === 'te' ? "డౌన్‌లోడ్ & షేర్" : language === 'hi' ? "साझा करें" : "Art & Sloka",
+      icon: Palette,
+      color: "from-pink-500/20 to-rose-500/10 border-pink-500/30 text-pink-400"
+    },
+    {
+      id: 'eli10',
+      title: language === 'te' ? "పిల్లల శైలిలో సులభంగా (ELI10)" : language === 'hi' ? "सरल बाल-बोध (ELI10)" : "Explain Like I'm 10",
+      desc: language === 'te' ? "గీతలోని గంభీరమైన శ్లోకాలను పిల్లలకు, యువతకు సులభంగా అర్థమయ్యే కథలు మరియు ఉపమానాలతో తెలుసుకోండి." : language === 'hi' ? "गूढ़ श्लोकों को लेगो, अंतरिक्ष व खेल जैसे सरल बाल-सुलभ उदाहरणों और कहानियों के माध्यम से समझें।" : "Understand deep philosophical concepts simplified through engaging stories and kid-friendly analogies.",
+      badge: language === 'te' ? "సులభ కథలు" : language === 'hi' ? "सरल उपमाएं" : "Story Wisdom",
+      icon: Smile,
+      color: "from-sky-500/20 to-blue-500/10 border-sky-500/30 text-sky-400"
+    },
+    {
+      id: 'myths',
+      title: language === 'te' ? "అపోహ vs వాస్తవం" : language === 'hi' ? "भ्रम बनाम सत्य" : "Myth vs Truth",
+      desc: language === 'te' ? "గీత కేవలం సన్యాసులకేనా? ఇది యుద్ధాన్ని ప్రోత్సహిస్తుందా? ప్రామాణిక శ్లోకాలతో అపోహలను తొలగించుకోండి." : language === 'hi' ? "क्या गीता केवल संन्यासियों के लिए है? क्या यह युद्ध को बढ़ावा देती है? प्रमाण सहित सच जानें।" : "Debunk common misconceptions about the Bhagavad Gita with verified scriptural citations and facts.",
+      badge: language === 'te' ? "శాస్త్రీయ సత్యాలు" : language === 'hi' ? "शास्त्रीय सत्य" : "Scriptural Proof",
+      icon: HelpCircle,
+      color: "from-indigo-500/20 to-violet-500/10 border-indigo-500/30 text-indigo-400"
+    },
+    {
+      id: 'random',
+      title: language === 'te' ? "కృష్ణుని ఆకస్మిక జ్ఞానం" : language === 'hi' ? "कृष्ण की अप्रत्याशित सीख" : "Krishna's Random Wisdom",
+      desc: language === 'te' ? "'సర్ప్రైజ్ మీ' బటన్ నొక్కి ఈ క్షణానికి మీకు అవసరమైన ఆకస్మిక దివ్య శ్లోకం మరియు సూక్ష్మ కర్తవ్యాన్ని పొందండి." : language === 'hi' ? "'सरप्राइज मी' क्लिक करें और वर्तमान क्षण के लिए मार्गदर्शन, श्लोक व दैनिक सूक्ष्म संकल्प प्राप्त करें।" : "Divine oracle button delivering an authentic random verse with reflection question and micro-action.",
+      badge: language === 'te' ? "దివ్య సంకల్పం" : language === 'hi' ? "दैवीय संकेत" : "Divine Oracle",
+      icon: Dices,
+      color: "from-violet-500/20 to-fuchsia-500/10 border-violet-500/30 text-violet-400"
+    }
+  ];
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -238,6 +331,74 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartChat, onExplore
                     <span>{t.seekGuidance}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </span>
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
+      </section>
+
+      {/* SECTION: 11 IMMERSIVE INTERACTIVE EXPERIENCES */}
+      <section className="py-20 bg-gradient-to-b from-[#081225] via-[#050C18] to-[#060E1A] border-b border-[#F1B941]/20 relative overflow-hidden">
+        {/* Divine background ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-gradient-to-r from-[#008DDA]/10 via-[#F1B941]/10 to-transparent blur-3xl pointer-events-none"></div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#1E3E62]/80 border border-[#F1B941]/40 shadow-sm shadow-[#F1B941]/10 mb-3">
+              <Sparkles className="w-4 h-4 text-[#F1B941]" />
+              <span className="text-xs font-bold tracking-widest text-[#F1B941] uppercase">
+                {language === 'te' ? 'సరికొత్త ఇంటరాక్టివ్ స్టూడియో' : language === 'hi' ? 'नवीनतम इंटरैक्टिव दिव्य अनुभव' : 'Interactive Wisdom Studio'}
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-4">
+              {language === 'te' ? '11 వినూత్న ఆధ్యాత్మిక అనుభవాలు & సాధనలు' : language === 'hi' ? '11 नवीन संवादात्मक अनुभव एवं साधना' : '11 Interactive Spiritual Experiences'}
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              {language === 'te' 
+                ? 'భావోద్వేగ శాంతి, వాస్తవ నిర్ణయ సంకటాలు, నిత్య సాధన మరియు జ్ఞాన పరీక్షల కోసం రూపొందించబడిన ప్రత్యేక సాధనాలు.'
+                : language === 'hi'
+                ? 'मन की शांति, धर्मसंकट के निर्णय, दैनिक साधना और शास्त्रीय ज्ञान के लिए तैयार किए गए इंटरैक्टिव टूल्स।'
+                : "Engage with Lord Krishna's teachings dynamically through emotional reflections, moral simulations, quizzes, private letters, and creative wisdom cards."
+              }
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {interactiveFeaturesList.map((feature) => {
+              const Icon = feature.icon;
+              return (
+                <div
+                  key={feature.id}
+                  onClick={() => onOpenInteractive ? onOpenInteractive(feature.id) : null}
+                  className="group relative bg-[#0B192C]/90 border border-slate-800 hover:border-[#F1B941]/60 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 hover:shadow-xl hover:shadow-[#F1B941]/10 hover:-translate-y-1 cursor-pointer"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-3.5">
+                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${feature.color} border flex items-center justify-center transition-transform group-hover:scale-110 shadow-sm`}>
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 group-hover:border-[#F1B941]/40 group-hover:text-[#F1B941] transition-colors">
+                        {feature.badge}
+                      </span>
+                    </div>
+
+                    <h3 className="font-serif font-bold text-base text-slate-100 group-hover:text-[#F1B941] transition-colors mb-2">
+                      {feature.title}
+                    </h3>
+                    <p className="text-xs text-slate-400 leading-relaxed line-clamp-3 mb-4">
+                      {feature.desc}
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-[#F1B941]">
+                    <span>
+                      {language === 'te' ? 'అనుభవించండి' : language === 'hi' ? 'अनुभव करें' : 'Explore Feature'}
+                    </span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+                  </div>
                 </div>
               );
             })}

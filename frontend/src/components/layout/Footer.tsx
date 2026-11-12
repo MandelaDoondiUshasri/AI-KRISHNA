@@ -58,6 +58,12 @@ export const Footer: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setA
                 </button>
               </li>
               <li>
+                <button onClick={() => setActiveTab('interactive')} className="hover:text-[#F1B941] text-[#F1B941] transition-colors flex items-center space-x-1">
+                  <span>✨</span>
+                  <span>{t.interactiveNav}</span>
+                </button>
+              </li>
+              <li>
                 <button onClick={() => setActiveTab('explorer')} className="hover:text-[#F1B941] transition-colors">
                   {t.explorerNav}
                 </button>

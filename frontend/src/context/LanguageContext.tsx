@@ -9,6 +9,7 @@ export interface Translations {
   homeNav: string;
   chatNav: string;
   explorerNav: string;
+  interactiveNav: string;
   dailyNav: string;
   savedNav: string;
   adminNav: string;
@@ -164,6 +165,7 @@ const translationsMap: Record<Language, Translations> = {
     homeNav: "Home",
     chatNav: "AI Krishna",
     explorerNav: "Gita Explorer",
+    interactiveNav: "Interactive Studio",
     dailyNav: "Daily Wisdom",
     savedNav: "Saved Insights",
     adminNav: "Admin",
@@ -348,6 +350,7 @@ const translationsMap: Record<Language, Translations> = {
     homeNav: "होम",
     chatNav: "एआई कृष्ण",
     explorerNav: "गीता अन्वेषण",
+    interactiveNav: "दिव्य अनुभव",
     dailyNav: "दैनिक अमृतवाणी",
     savedNav: "सहेजे गए विचार",
     adminNav: "व्यवस्थापक",
@@ -532,6 +535,7 @@ const translationsMap: Record<Language, Translations> = {
     homeNav: "హోమ్",
     chatNav: "AI కృష్ణ",
     explorerNav: "గీతా ఎక్స్‌ప్లోరర్",
+    interactiveNav: "దివ్య అనుభవాలు",
     dailyNav: "నేటి గీతామృతం",
     savedNav: "భద్రపరిచినవి",
     adminNav: "అడ్మిన్",

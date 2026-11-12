@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, MessageSquare, Compass, Sun, Bookmark, Shield, LogIn, LogOut, Globe, Menu, X } from 'lucide-react';
+import { Sparkles, MessageSquare, Compass, Sun, Bookmark, Shield, LogIn, LogOut, Globe, Menu, X, Flame } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { Language } from '../../types';
@@ -19,6 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
     { id: 'home', label: t.homeNav, icon: Sparkles },
     { id: 'chat', label: t.chatNav, icon: MessageSquare },
     { id: 'explorer', label: t.explorerNav, icon: Compass },
+    { id: 'interactive', label: t.interactiveNav, icon: Flame },
     { id: 'daily', label: t.dailyNav, icon: Sun },
     { id: 'saved', label: t.savedNav, icon: Bookmark },
     ...(user?.role === 'admin' ? [{ id: 'admin', label: t.adminNav, icon: Shield }] : [])
@@ -147,7 +148,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="lg:hidden flex items-center space-x-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800"
@@ -160,7 +161,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, openAut
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0B192C] border-b border-[#F1B941]/20 px-4 pt-2 pb-4 space-y-2">
+        <div className="lg:hidden bg-[#0B192C] border-b border-[#F1B941]/20 px-4 pt-2 pb-4 space-y-2">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
